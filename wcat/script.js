@@ -24,16 +24,30 @@ function wcat(arguments) {
             return;
         }
     }
+
+    let numbering = 1;
     for(let i = 0; i< files.length; i++) {
         let data = fs.readFileSync(files[i],"utf-8");
         if(options.includes("-s")) {
             let lines = data.split("\r\n");
             for(let j = 0; j < lines.length; j++) {
                 if(lines[j] != "") {
-                    console.log(lines[j]);
+                    if(options.includes("-n")) {
+                        console.log(numbering + ". " + lines[j]);
+                        numbering += 1;
+                    } else {
+                        console.log(lines[j]);
+                    }
                 }
             }
-        } else {
+        } else if(options.includes("-n")) {
+            let lines = data.split("\r\n");
+            for(let j = 0; j < lines.length; j++) {
+                console.log(numbering + ". " + lines[j]);
+                numbering += 1;
+            }
+        }
+        else {
             console.log(data);
         }
     }
