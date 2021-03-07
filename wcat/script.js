@@ -32,7 +32,7 @@ function wcat(arguments) {
             let lines = data.split("\r\n");
             for (let j = 0; j < lines.length; j++) {
                 if (lines[j] != "") {
-                    if (options.includes("-n")) {
+                    if (options.includes("-n") || options.includes("-b")) {
                         console.log(numbering + ". " + lines[j]);
                         numbering += 1;
                     } else {
