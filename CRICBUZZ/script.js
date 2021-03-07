@@ -26,7 +26,7 @@ async function main () {
         }
     }
     console.log(batsmenScorecard);
-    await browser.close;
+    await browser.close();
  }
 
  main();
