@@ -5,8 +5,8 @@ const wd = require("selenium-webdriver");
 const browser = new wd.Builder().forBrowser('chrome').build();
 let matchId = process.argv[2];
 let innings = process.argv[3];
-let batsmenScorecard = [];
-let bowlerScorecard = [];
+let batsmenUrls = [];
+let bowlerUrls = [];
 let batsmenKeys = ["playerName", "out", "runs", "ballsPlayed", "fours", "sixes", "strikeRate"];
 let bowlerKeys = ["playerName", "overs", "maidenOvers", "runs", "wickets", "noBalls", "wideBalls", "economy"];
 async function main () {
@@ -19,27 +19,24 @@ async function main () {
     let inningsBatsmenRows = await tables[0].findElements(wd.By.css(".cb-col.cb-col-100.cb-scrd-itms"));
     for(let i = 0; i < inningsBatsmenRows.length; i++) {
         let columns = await inningsBatsmenRows[i].findElements(wd.By.css("div"));
-        if(columns.length == 7) {
-            let data = {};
-            for(let j = 0; j < columns.length; j++) {
-                data[batsmenKeys[j]] = await columns[j].getAttribute("innerText");
-            }
-            batsmenScorecard.push(data);
+        if(columns.length == 7){
+            let url = await columns[0].findElement(wd.By.css("a")).getAttribute("href");
+            batsmenUrls.push(url);
         }
+        
     }
-    console.log(batsmenScorecard);
     let inningsBowlerRows = await tables[1].findElements(wd.By.css(".cb-col.cb-col-100.cb-scrd-itms"));
     for(let i = 0; i < inningsBowlerRows.length; i++) {
         let columns = await inningsBowlerRows[i].findElements(wd.By.css("div"));
         if(columns.length == 8) {
-            let data = {};
-            for(let j = 0; j < columns.length; j++) {
-                data[bowlerKeys[j]] = await columns[j].getAttribute("innerText");
-            }
-            bowlerScorecard.push(data);
+            let url = await columns[0].findElement(wd.By.css("a")).getAttribute("href");
+            bowlerUrls.push(url);
         }
     }
-    console.log(bowlerScorecard);
+    let finalUrls = batsmenUrls.concat(bowlerUrls);
+    for(url of finalUrls) {
+        await browser.get(url);
+    }
     await browser.close();
  }
 
