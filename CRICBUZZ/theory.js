@@ -25,3 +25,34 @@
 // }
 // temp();
 // console.log(5);
+
+let input = {
+    obj1: {
+        obj2: {
+            two: 2,
+            one: 1
+        }
+    },
+    obj4: {
+        obj3: {
+            three: 3
+        }
+    }
+}
+
+function flatten(obj) {
+    let result = {};
+    for(let i in obj) {
+        if(typeof(obj[i]) == "object") {
+            let temp = flatten(obj[i]);
+            for(j in temp) {
+                result[i + "." + j] = temp[j];
+            }
+        } else {
+            result[i] = obj[i];
+        }
+    }
+    return result;
+}
+
+console.log(flatten(input));
