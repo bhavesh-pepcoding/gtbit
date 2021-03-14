@@ -19,10 +19,27 @@ async function main() {
         let projectBoxes = await browser.findElements(wd.By.css("a.text-bold"));
         finalData[i]["projects"] = [];
         for(let j = 0; j < projectBoxes.length; j++) {
-            if( j == 8) {
+            if( j == 2) {
                 break;
             }
             finalData[i].projects.push({projectUrl: await projectBoxes[j].getAttribute("href")});
+        }
+        for(let j = 0; j < finalData[i].projects.length; j++) {
+            await browser.get(finalData[i].projects[j].projectUrl + "/issues");
+            let issueBoxes = await browser.findElements(wd.By.css(".Link--primary.v-align-middle.no-underline.h4.js-navigation-open"));
+            finalData[i].projects[j]["issues"] = [];
+            let currUrl = await browser.getCurrentUrl();
+            if(currUrl == (finalData[i].projects[j].projectUrl + "/issues")) {
+                for(let k = 0; k < issueBoxes.length; k++) {
+                    if(k == 2) {
+                        break;
+                    }
+                    let heading = await issueBoxes[k].getAttribute("innerText");
+                    let url = await issueBoxes[k].getAttribute("href");
+                    finalData[i].projects[j].issues.push({heading: heading, url: url});
+                }
+            }
+            
         }
     }
     fs.writeFileSync("finalData.json", JSON.stringify(finalData));

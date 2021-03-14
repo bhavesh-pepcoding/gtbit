@@ -1,45 +1,83 @@
 [
   {
-    "topicUrl": "https://github.com/topics/unreal-engine",
+    "topicUrl": "https://github.com/topics/laravel",
     "projects": [
-      { "projectUrl": "https://github.com/microsoft/AirSim" },
-      { "projectUrl": "https://github.com/heroiclabs/nakama" },
+      { "projectUrl": "https://github.com/laravel/laravel", "issues": [] },
       {
-        "projectUrl": "https://github.com/MFatihMAR/Game-Networking-Resources"
-      },
-      { "projectUrl": "https://github.com/Allar/ue4-style-guide" },
-      { "projectUrl": "https://github.com/lgsvl/simulator" },
-      { "projectUrl": "https://github.com/Tencent/sluaunreal" },
-      { "projectUrl": "https://github.com/tomlooman/ActionRoguelike" },
-      { "projectUrl": "https://github.com/gildor2/UEViewer" }
+        "projectUrl": "https://github.com/laravel/framework",
+        "issues": [
+          {
+            "heading": "Testing Job Batching",
+            "url": "https://github.com/laravel/framework/issues/36590"
+          },
+          {
+            "heading": "[8.x] Between method doesn't change cron expression in Scheduler",
+            "url": "https://github.com/laravel/framework/issues/36581"
+          }
+        ]
+      }
     ]
   },
   {
-    "topicUrl": "https://github.com/topics/phaser",
+    "topicUrl": "https://github.com/topics/amphp",
     "projects": [
-      { "projectUrl": "https://github.com/photonstorm/phaser" },
-      { "projectUrl": "https://github.com/nicholas-ochoa/OpenSC2K" },
-      { "projectUrl": "https://github.com/photonstorm/phaser-examples" },
       {
-        "projectUrl": "https://github.com/ssusnic/Machine-Learning-Flappy-Bird"
+        "projectUrl": "https://github.com/amphp/amp",
+        "issues": [
+          {
+            "heading": "EventDriver Invalid file descriptor",
+            "url": "https://github.com/amphp/amp/issues/344"
+          },
+          {
+            "heading": "php8 on windows with error",
+            "url": "https://github.com/amphp/amp/issues/343"
+          }
+        ]
       },
-      { "projectUrl": "https://github.com/lean/phaser-es6-webpack" },
-      { "projectUrl": "https://github.com/photonstorm/phaser-ce" },
-      { "projectUrl": "https://github.com/channingbreeze/games" },
-      { "projectUrl": "https://github.com/digitsensitive/phaser3-typescript" }
+      {
+        "projectUrl": "https://github.com/danog/MadelineProto",
+        "issues": [
+          {
+            "heading": "expiring invite links",
+            "url": "https://github.com/danog/MadelineProto/issues/907"
+          },
+          {
+            "heading": "Handling updates with multi-account",
+            "url": "https://github.com/danog/MadelineProto/issues/903"
+          }
+        ]
+      }
     ]
   },
   {
-    "topicUrl": "https://github.com/topics/reactiveui",
+    "topicUrl": "https://github.com/topics/pwa",
     "projects": [
-      { "projectUrl": "https://github.com/CodeHubApp/CodeHub" },
-      { "projectUrl": "https://github.com/reactiveui/ReactiveUI" },
-      { "projectUrl": "https://github.com/skatejs/skatejs" },
-      { "projectUrl": "https://github.com/chayxana/Restaurant-App" },
-      { "projectUrl": "https://github.com/Wouterdek/NodeNetwork" },
-      { "projectUrl": "https://github.com/worldbeater/Camelotia" },
-      { "projectUrl": "https://github.com/wieslawsoltes/Dock" },
-      { "projectUrl": "https://github.com/TheEightBot/Reactive-Examples" }
+      {
+        "projectUrl": "https://github.com/angular/angular",
+        "issues": [
+          {
+            "heading": "TypeScript not happy with some example code in tutorial (Tour of Heros) part 5 (navigation)",
+            "url": "https://github.com/angular/angular/issues/41207"
+          },
+          {
+            "heading": "Module parse failed: Identifier 'ɵngcc0' has already been declared",
+            "url": "https://github.com/angular/angular/issues/41206"
+          }
+        ]
+      },
+      {
+        "projectUrl": "https://github.com/ionic-team/ionic-framework",
+        "issues": [
+          {
+            "heading": "@ionic vue and vue-router 5.5.3 and onward - props not working on subsequent router.push()",
+            "url": "https://github.com/ionic-team/ionic-framework/issues/23043"
+          },
+          {
+            "heading": "bug: iOS NavController animates too much slide",
+            "url": "https://github.com/ionic-team/ionic-framework/issues/23042"
+          }
+        ]
+      }
     ]
   }
 ]
