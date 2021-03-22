@@ -58,23 +58,56 @@ const fs = require("fs");
 // }
 
 // readfile("abc.txt");
-let count = 1;
+// let count = 1;
 
-function readfile(filename) {
-    if(filename == undefined) {
-        filename = (count -1) + ".txt";
-    }
-    fs.readFile(filename,"utf-8",writefile)
+// function readfile(filename) {
+//     if(filename == undefined) {
+//         filename = (count -1) + ".txt";
+//     }
+//     fs.readFile(filename,"utf-8",writefile)
+// }
+
+// function writefile(err,data) {
+//     let lines = data.split("\r\n");
+//     if(lines.length > 1) {
+//         lines = lines.splice(1);
+//         let writeData = lines.join("\r\n");
+//         fs.writeFile(count + ".txt",writeData,readfile);
+//         count += 1;
+//     }
+// }
+
+// readfile("abc.txt");
+
+
+// let a = true;
+// setInterval(() => {
+//     if(a) console.log("hello");
+// }, 2000);
+
+// setTimeout(() => {
+//     a = false;
+// }, 10100);
+
+function myFilter(my_array, callback){
+    //Enter your code here
+    let arr = [];
+   for(let ele of my_array) {
+       if(callback(ele)) {
+           arr.push(ele);
+       }
+   }
+    return arr;
+  
+  
+  
 }
 
-function writefile(err,data) {
-    let lines = data.split("\r\n");
-    if(lines.length > 1) {
-        lines = lines.splice(1);
-        let writeData = lines.join("\r\n");
-        fs.writeFile(count + ".txt",writeData,readfile);
-        count += 1;
-    }
+function callback(element) {
+    return element % 2 == 0;
 }
 
-readfile("abc.txt");
+function processData(inputArray) {
+    //In blank write anonymous function, which takes one parameter and returns true if its even or false if its odd.
+    console.log(myFilter(inputArray, callback));   
+} 
