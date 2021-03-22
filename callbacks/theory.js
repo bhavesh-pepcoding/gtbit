@@ -61,10 +61,9 @@ const fs = require("fs");
 let count = 1;
 
 function readfile(filename) {
-    console.log(filename);
-    // if(filename == undefined) {
-    //     filename = (count -1) + ".txt";
-    // }
+    if(filename == undefined) {
+        filename = (count -1) + ".txt";
+    }
     fs.readFile(filename,"utf-8",writefile)
 }
 
@@ -73,9 +72,7 @@ function writefile(err,data) {
     if(lines.length > 1) {
         lines = lines.splice(1);
         let writeData = lines.join("\r\n");
-        fs.writeFile(count + ".txt",writeData,function(){
-            readfile((count-1) + ".txt")
-        });
+        fs.writeFile(count + ".txt",writeData,readfile);
         count += 1;
     }
 }
