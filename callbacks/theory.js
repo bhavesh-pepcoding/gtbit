@@ -89,25 +89,67 @@ const fs = require("fs");
 //     a = false;
 // }, 10100);
 
-function myFilter(my_array, callback){
-    //Enter your code here
+// function myFilter(my_array, callback){
+//     //Enter your code here
+//     let arr = [];
+//    for(let ele of my_array) {
+//        if(callback(ele)) {
+//            arr.push(ele);
+//        }
+//    }
+//     return arr;
+  
+  
+  
+// }
+
+// function callback(element) {
+//     return element % 2 == 0;
+// }
+
+// function processData(inputArray) {
+//     //In blank write anonymous function, which takes one parameter and returns true if its even or false if its odd.
+//     console.log(myFilter(inputArray, callback));   
+// }
+
+//serially
+let n = process.argv[2];
+let fileNumber = 1;
+function createfile() {
+    if(fileNumber > n) {
+        return;
+    }
+    let numberOfLines = Math.floor(Math.random() * 101);
     let arr = [];
-   for(let ele of my_array) {
-       if(callback(ele)) {
-           arr.push(ele);
-       }
-   }
-    return arr;
-  
-  
-  
+    for(let i = 0; i < numberOfLines; i++) {
+        arr.push(Math.floor(Math.random() * 101));
+    }
+    let writeData = arr.join("\r\n");
+    fs.writeFile(fileNumber + ".txt", writeData, createfile);
+    console.log("You just create file number", fileNumber);
+    fileNumber += 1;
 }
 
-function callback(element) {
-    return element % 2 == 0;
-}
+createfile();
+//parallely
+// let n = process.argv[2];
+// let fileNumber = 1;
+// function printFilenumber(fileNumber) {
+//     console.log("You just created file number", fileNumber);
+// }
+// function createfile(filenumber) {
+//     let numberOfLines = Math.floor(Math.random() * 101);
+//     let arr = [];
+//     for(let i = 0; i < numberOfLines; i++) {
+//         arr.push(Math.floor(Math.random() * 101));
+//     }
+//     let writeData = arr.join("\r\n");
+//     fs.writeFile(fileNumber + ".txt", writeData, function(){
+//         printFilenumber(filenumber);
+//     });
+// }
 
-function processData(inputArray) {
-    //In blank write anonymous function, which takes one parameter and returns true if its even or false if its odd.
-    console.log(myFilter(inputArray, callback));   
-} 
+// for(let i = 0; i < n; i++) {
+//     createfile(fileNumber);
+//     fileNumber += 1;
+// }
