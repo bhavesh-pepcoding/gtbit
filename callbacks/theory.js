@@ -369,50 +369,70 @@ const fs = require("fs");
 //     console.log(data);
 // });
 
-let promise1 = fs.promises.readFile("1.txt","utf-8").then(function(data){
-    console.log("first file reading completed");
-});
+// let promise1 = fs.promises.readFile("1.txt","utf-8").then(function(data){
+//     console.log("first file reading completed");
+// });
 
-let promise2 = fs.promises.readFile("2.txt","utf-8").then(function(data){
-    console.log("second file reading completed");
-});
+// let promise2 = fs.promises.readFile("2.txt","utf-8").then(function(data){
+//     console.log("second file reading completed");
+// });
 
-let promise3 = fs.promises.readFile("3.txt","utf-8").then(function(data){
-    console.log("third file reading completed");
-});
-let promise4 = fs.promises.readFile("4.txt","utf-8").then(function(data){
-    console.log("fourth file reading completed");
-});
-let promise5 = fs.promises.readFile("5.txt","utf-8").then(function(data){
-    console.log("fifth file reading completed");
-});
-let promise6 = fs.promises.readFile("6.txt","utf-8").then(function(data){
-    console.log("sixth file reading completed");
-});
-let promise7 = fs.promises.readFile("7.txt","utf-8").then(function(data){
-    console.log("seventh file reading completed");
-});
-let promise8 = fs.promises.readFile("8.txt","utf-8").then(function(data){
-    console.log("eighth file reading completed");
-});
+// let promise3 = fs.promises.readFile("3.txt","utf-8").then(function(data){
+//     console.log("third file reading completed");
+// });
+// let promise4 = fs.promises.readFile("4.txt","utf-8").then(function(data){
+//     console.log("fourth file reading completed");
+// });
+// let promise5 = fs.promises.readFile("5.txt","utf-8").then(function(data){
+//     console.log("fifth file reading completed");
+// });
+// let promise6 = fs.promises.readFile("6.txt","utf-8").then(function(data){
+//     console.log("sixth file reading completed");
+// });
+// let promise7 = fs.promises.readFile("7.txt","utf-8").then(function(data){
+//     console.log("seventh file reading completed");
+// });
+// let promise8 = fs.promises.readFile("8.txt","utf-8").then(function(data){
+//     console.log("eighth file reading completed");
+// });
 
-Promise.all([promise1,promise2,promise3,promise4,promise5,promise6,promise7,promise8]).then(function(data){
-    console.log("Reading all file completed");
-})
+// Promise.all([promise1,promise2,promise3,promise4,promise5,promise6,promise7,promise8]).then(function(data){
+//     console.log("Reading all file completed");
+// })
 
-Promise.race([promise1,promise2,promise3,promise4,promise5,promise6,promise7,promise8]).then(function(data){
-    console.log("Reading one file completed");
-})
+// Promise.race([promise1,promise2,promise3,promise4,promise5,promise6,promise7,promise8]).then(function(data){
+//     console.log("Reading one file completed");
+// })
 
 
-function delay(time) {
-    return new Promise(function(resolve) {
-        setTimeout(function(){
-            resolve('success ' + time);
-        }, time );
-    });
+// function delay(time) {
+//     return new Promise(function(resolve) {
+//         setTimeout(function(){
+//             resolve('success ' + time);
+//         }, time );
+//     });
+// }
+
+// Promise.race([delay(500), delay(100)]).then(function(data) {
+//     console.log(data);
+// });
+let n = 8;
+let fileCompleted = 0;
+let sum = 0;
+function callback(err,data) {
+    fileCompleted += 1;
+    let lines = data.split("\r\n");
+    for(line of lines) {
+        sum += parseInt(line);
+    }
+    if(fileCompleted == n) {
+        console.log(sum);
+    }
+}
+function readfile(filename) {
+    fs.readFile(filename,"utf-8",callback);
 }
 
-Promise.race([delay(500), delay(100)]).then(function(data) {
-    console.log(data);
-});
+for(let i = 1; i <= n; i++ ) {
+    readfile(i + ".txt");
+}
