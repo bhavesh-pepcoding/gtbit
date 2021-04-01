@@ -416,23 +416,121 @@ const fs = require("fs");
 // Promise.race([delay(500), delay(100)]).then(function(data) {
 //     console.log(data);
 // });
-let n = 8;
-let fileCompleted = 0;
-let sum = 0;
-function callback(err,data) {
-    fileCompleted += 1;
-    let lines = data.split("\r\n");
-    for(line of lines) {
-        sum += parseInt(line);
-    }
-    if(fileCompleted == n) {
-        console.log(sum);
-    }
-}
-function readfile(filename) {
-    fs.readFile(filename,"utf-8",callback);
-}
+// let n = 8;
+// let fileCompleted = 0;
+// let sum = 0;
+// function callback(err,data) {
+//     fileCompleted += 1;
+//     let lines = data.split("\r\n");
+//     for(line of lines) {
+//         sum += parseInt(line);
+//     }
+//     if(fileCompleted == n) {
+//         console.log(sum);
+//     }
+// }
+// function readfile(filename) {
+//     fs.readFile(filename,"utf-8",callback);
+// }
 
-for(let i = 1; i <= n; i++ ) {
-    readfile(i + ".txt");
-}
+// for(let i = 1; i <= n; i++ ) {
+//     readfile(i + ".txt");
+// }
+
+
+// async function print() {
+//     console.log("hello");
+//     return "hello";
+// }
+
+// print().then(function(data){
+//     console.log(data);
+// })
+
+// async function read(){
+//     let data = await fs.promises.readFile("1.txt","utf-8");
+    
+//     console.log("hello");
+//     setTimeout(() => {
+//         console.log("timeout");
+//     }, 1000);
+//     console.log("hello");
+//     console.log("hello");
+//     console.log("hello");
+//     console.log("hello");
+// }
+// read();
+
+// function wait(time) {
+//     return new Promise(function(resolve,reject){
+//         setTimeout(() => {
+//           resolve();  
+//         }, time);
+//     })
+// }
+
+// async function print() {
+//     console.log("timer started");
+//     for(let i = 1; i <= 10; i++) {
+//         await wait(1000);
+//         console.log(i);
+//     }
+    
+// }
+
+// print();
+
+// async function job() {
+//     throw undefined;
+// }
+
+// async function main() {
+//     try{
+//     await job();
+//     console.log("success 1");
+//     console.log("success 2");
+//     console.log("success 3");
+//     } catch(err) {
+//         console.log('Error 1');
+//     }
+//     console.log('Success 4');
+// }
+
+// async function main() {
+    
+// }
+
+// main();
+// let count = 0;
+// async function job(state) {
+//     if(state) {
+//         count += 1;
+//         return "success" + count;
+//     } else {
+//         throw "error";
+//     }
+// }
+
+// async function main() {
+//     let data;
+//     try{
+//         try{
+//             data = await job(true);
+//             console.log(data);
+//             data = await job(true);
+//         } catch(err) {
+//             data = undefined;
+//             console.log(err);
+//             console.log("Error caught");
+//         }
+//         if(data) {
+//             console.log(data);
+//         }
+//         await job(true);
+        
+//     } catch(err) {
+//         console.log(err);
+//     } 
+// }
+
+// main();
