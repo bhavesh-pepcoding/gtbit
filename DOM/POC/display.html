@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display</title>
+    <style>
+        .d1 {
+            height: 10rem;
+            width: 10rem;
+        }
+
+        .d2 {
+            display: inline-block;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .green {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Block Elements</h1>
+    <p>
+        The elements which occupy the complete horizontal space and doesnot let any other element occupy their
+        horizontal space even if it's empty. We can speicfy their height and width. e.g - div , p
+    </p>
+
+    <div class="d1 blue"></div>
+    <div class="d1 red"></div>
+    <div class="d1 green"></div>
+
+
+    <h1>Inline Elements</h1>
+    <p>
+        These elements let other elements occupy their horizontal space but we cannot specify their height and width
+        e.g span
+    </p>
+
+    <span class="blue">bjbdfjkbdjbjbdvj</span>
+    <span class="green">jcbjbdjbvjkbdjksb</span>
+    <span class="red">jbvjbjbsjbvjbjvb</span>
+
+    <h1>Inline-block</h1>
+    <p>these elements have mixed properties of block and inline. you can give height and width to them. These doesn't occupy
+       complete horizontal space.
+    </p>
+
+    <div class="d1 d2 blue"></div>
+    <div class="d1 d2 red"></div>
+    <div class="d1 d2 green"></div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+body {
+    margin: 0
+}
+
+* {
+    box-sizing: border-box;
+}
+.container {
+    background-color: violet;
+    color: white;
+}
+
+.container,
+.input-container,
+.task-container {
+    border: 1px solid;
+}
+
+.input-container {
+    height: 20vh;
+    text-align: center;
+}
+
+.task-container {
+    height: 80vh;
+}
+
+.task-input {
+    text-align: center;
+    font-size: 1.5rem;
+    height: 4rem;
+    width: 30%;
+    
+}
+
+.task-container li {
+    font-size: 1.5rem;
+    list-style: none;
+    background-color: rgb(201, 58, 201);
+    width: 40%;
+    text-align: center;
+    margin-top: 10px;
+}
