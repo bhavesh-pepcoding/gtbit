@@ -33,18 +33,18 @@ body {
 
 .add-delete-container {
     width: 9vw;
+    display: flex;
 }
 
 .filter {
     height: 100%;
     width: 25%;
-    display: flex;
 }
 
 .pink-color-btn,
 .blue-color-btn,
 .green-color-btn,
-.black-color-btn {
+.yellow-color-btn {
     display: block;
     width: 40%;
     height: 40%;
@@ -63,8 +63,8 @@ body {
     background-color: green;
 }
 
-.black-color-btn {
-    background-color: black;
+.yellow-color-btn {
+    background-color: yellow;
 }
 
 .blue-color-btn {
@@ -72,7 +72,29 @@ body {
 }
 
 .filter:hover {
-    background-color: #333;
+    background-color: black;
+    cursor: pointer;
+}
+
+.add,.delete {
+    height: 100%;
+    width: 50%;
+}
+
+.action-btn {
+    display: block;
+    height: 40%;
+    width: 40%;
+    margin-top: calc(8vh * 0.3);
+    margin-bottom: calc(8vh * 0.3);
+    margin-left: calc(4.5vw * 0.3);
+    margin-right: calc(4.5vw * 0.3);
+    background-color: white;
+    padding-left: 3%;
+}
+
+.add:hover, .delete:hover {
+    background-color: black;
     cursor: pointer;
 }
 
