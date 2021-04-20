@@ -18,11 +18,16 @@ body {
 
 .input-container {
     height: 20vh;
-    text-align: center;
+    width: 100%;
+    padding-top: 40px;
 }
 
 .task-container {
     height: 80vh;
+}
+
+.task-list {
+    padding-left: 0;
 }
 
 .task-input {
@@ -30,7 +35,8 @@ body {
     font-size: 1.5rem;
     height: 4rem;
     width: 30%;
-    
+    margin: auto;
+    display: block;
 }
 
 .task-container li {
@@ -39,5 +45,14 @@ body {
     background-color: rgb(201, 58, 201);
     width: 40%;
     text-align: center;
-    margin-top: 10px;
+    margin: 10px auto 0px auto;
+    height: 50px;
+}
+
+
+@media screen and (max-width: 768px){
+    .task-input,
+    .task-container li {
+        width: 70%;
+    }
 }
