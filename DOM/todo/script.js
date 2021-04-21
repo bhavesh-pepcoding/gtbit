@@ -17,8 +17,9 @@ input.addEventListener("keypress", function(e) {
         input.value = "";
         let li = document.createElement("li");
         li.innerText = task;
-        ul.insertBefore(li, ul.firstChild);
         li.addEventListener("dblclick", deleteTask);
+        ul.insertBefore(li, ul.firstChild);
+        
     }
 });
 
