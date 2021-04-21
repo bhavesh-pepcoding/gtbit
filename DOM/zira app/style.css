@@ -15,6 +15,7 @@ body {
 .ticket-container {
     height: 88vh;
     background-color: #f2f2f2;
+    position: relative;
 }
 
 .filter-container,
@@ -55,19 +56,19 @@ body {
     margin-right: calc(4.5vw * 0.3);
 }
 
-.pink-color-btn {
+.pink-color-btn, .modal-pink-filter {
     background-color: pink;
 }
 
-.green-color-btn {
+.green-color-btn, .modal-green-filter {
     background-color: green;
 }
 
-.yellow-color-btn {
+.yellow-color-btn, .modal-yellow-filter {
     background-color: yellow;
 }
 
-.blue-color-btn {
+.blue-color-btn, .modal-blue-filter {
     background-color: blue;
 }
 
@@ -97,5 +98,48 @@ body {
     background-color: black;
     cursor: pointer;
 }
+
+.modal {
+    height: 18rem;
+    width: 35rem;
+    background-color: white;
+    display: flex;
+    position: absolute;
+    top: 10rem;
+    left: calc((100vw - 35rem) / 2)
+}
+
+.task-to-be-added {
+    width: 70%;
+    height: 100%;
+    padding: 3rem;
+    outline: none;
+    overflow: auto;
+}
+
+.modal-priority-list {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 100%;
+    justify-content: space-between;
+    padding: 3rem;
+    background-color: #444;
+}
+
+.modal-filter {
+    width: 100%;
+    height: 20%;
+}
+
+.modal-filter:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+
+
+
+
 
 
