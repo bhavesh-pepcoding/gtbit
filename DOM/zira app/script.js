@@ -10,6 +10,14 @@ function filterHandler (e) {
 
 }
 let addBtn = document.querySelector(".add");
+let deleteBtn = document.querySelector(".delete");
+
+deleteBtn.addEventListener("click", function(e) {
+    let selectedTickets = document.querySelectorAll(".ticket.active");
+    for(let i = 0; i < selectedTickets.length; i++) {
+        selectedTickets[i].remove();
+    }
+});
 
 addBtn.addEventListener("click", showModal);
 
@@ -28,16 +36,16 @@ function showModal(e) {
         // </div>`;
         // TC.appendChild(modal);
 
-        let modal = `<div class="modal">
-            <div class="task-to-be-added" data-typed="false" contenteditable="true">Enter your task here</div>
+        let modal = document.createElement("div");
+        modal.classList.add("modal");
+        modal.innerHTML = `<div class="task-to-be-added" data-typed="false" contenteditable="true">Enter your task here</div>
             <div class="modal-priority-list">
                 <div class="modal-pink-filter modal-filter active"></div>
                 <div class="modal-blue-filter modal-filter"></div>
                 <div class="modal-green-filter  modal-filter"></div>
                 <div class="modal-yellow-filter  modal-filter"></div>
-            </div>
-        </div>`;
-        TC.innerHTML = TC.innerHTML + modal;
+            </div>`;
+        TC.appendChild(modal);
         selectedPriority = "pink"; //by default
         let taskModal = document.querySelector(".task-to-be-added");
         taskModal.addEventListener("click", function(e) {
@@ -72,9 +80,10 @@ function addTicket(taskModal,e) {
     if(e.key == "Enter" && e.shiftKey == false && taskModal.innerText.trim() != "") {
         let task = taskModal.innerText;
         let ticket = document.createElement("div");
+        let id = uid();
         ticket.classList.add("ticket");
         ticket.innerHTML = `<div class="ticket-color ticket-color-${selectedPriority}"></div>
-                        <div class="ticket-id">#ashvhj</div>
+                        <div class="ticket-id">#${id}</div>
                         <div class="task">${task}</div>`;
 
         document.querySelector(".modal").remove();
@@ -82,7 +91,7 @@ function addTicket(taskModal,e) {
         TC.appendChild(ticket);
         ticket.addEventListener("click", function(e) {
             if(e.currentTarget.classList.contains("active")) {
-                e.currentTarget.classList.remove("active")
+                e.currentTarget.classList.remove("active");
             } else {
                 e.currentTarget.classList.add("active");
             }
