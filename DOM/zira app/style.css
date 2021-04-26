@@ -17,6 +17,10 @@ body {
     background-color: #f2f2f2;
     position: relative;
     padding: 3rem;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    overflow-y: auto;
 }
 
 .filter-container,
@@ -147,6 +151,8 @@ body {
     height: 9rem;
     width: 16rem;
     background-color: white;
+    margin-bottom: 15px;
+    /* margin: 0 auto 0 auto; */
 }
 
 .ticket-color {
@@ -165,6 +171,10 @@ body {
     height: 79%;
     width: 100%;
     padding: 3%;
+}
+
+.ticket.active {
+    box-shadow: 0 0 3px 1px;
 }
 
 

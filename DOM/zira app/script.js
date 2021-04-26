@@ -50,34 +50,43 @@ function showModal(e) {
         taskModal.addEventListener("keypress", addTicket.bind(this,taskModal));
         let modalFilters = document.querySelectorAll(".modal-filter");
         for(let i = 0; i < modalFilters.length; i++) {
-            modalFilters[i].addEventListener("click", selectPriority);
+            modalFilters[i].addEventListener("click", selectPriority.bind(this,taskModal));
         }
     }
 
 }
 
 
-function selectPriority(e) {
+function selectPriority(taskModal,e) {
     let activeFIlter = document.querySelector(".modal-filter.active");
     activeFIlter.classList.remove("active");
     selectedPriority = e.currentTarget.classList[0].split("-")[1];
     e.currentTarget.classList.add("active");
+    taskModal.click();
+    taskModal.focus();
 }
 
 
 function addTicket(taskModal,e) {
+    console.log(e);
     if(e.key == "Enter" && e.shiftKey == false && taskModal.innerText.trim() != "") {
         let task = taskModal.innerText;
-
-        let ticket = `<div class="ticket">
-                        <div class="ticket-color ticket-color-${selectedPriority}"></div>
+        let ticket = document.createElement("div");
+        ticket.classList.add("ticket");
+        ticket.innerHTML = `<div class="ticket-color ticket-color-${selectedPriority}"></div>
                         <div class="ticket-id">#ashvhj</div>
-                        <div class="task">${task}</div>
-                    </div>`;
+                        <div class="task">${task}</div>`;
 
         document.querySelector(".modal").remove();
         modalVisible = false;
-        TC.innerHTML = TC.innerHTML + ticket;
+        TC.appendChild(ticket);
+        ticket.addEventListener("click", function(e) {
+            if(e.currentTarget.classList.contains("active")) {
+                e.currentTarget.classList.remove("active")
+            } else {
+                e.currentTarget.classList.add("active");
+            }
+        });
     } else if(e.key == "Enter" && e.shiftKey == false) {
         e.preventDefault();
         alert("Error! you have not type anything in task.")
