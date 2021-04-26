@@ -16,6 +16,7 @@ body {
     height: 88vh;
     background-color: #f2f2f2;
     position: relative;
+    padding: 3rem;
 }
 
 .filter-container,
@@ -56,19 +57,19 @@ body {
     margin-right: calc(4.5vw * 0.3);
 }
 
-.pink-color-btn, .modal-pink-filter {
+.pink-color-btn, .modal-pink-filter, .ticket-color-pink {
     background-color: pink;
 }
 
-.green-color-btn, .modal-green-filter {
+.green-color-btn, .modal-green-filter, .ticket-color-green {
     background-color: green;
 }
 
-.yellow-color-btn, .modal-yellow-filter {
+.yellow-color-btn, .modal-yellow-filter, .ticket-color-yellow {
     background-color: yellow;
 }
 
-.blue-color-btn, .modal-blue-filter {
+.blue-color-btn, .modal-blue-filter, .ticket-color-blue {
     background-color: blue;
 }
 
@@ -142,6 +143,29 @@ body {
     border: 5px solid;
 }
 
+.ticket {
+    height: 9rem;
+    width: 16rem;
+    background-color: white;
+}
+
+.ticket-color {
+    height: 6%;
+    width: 100%;
+}
+
+.ticket-id {
+    height: 15%;
+    width: 100%;
+    padding: 3%;
+    color: grey;
+}
+
+.task {
+    height: 79%;
+    width: 100%;
+    padding: 3%;
+}
 
 
 
