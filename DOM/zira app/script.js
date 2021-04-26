@@ -2,6 +2,27 @@ let TC = document.querySelector(".ticket-container");
 let allFilters = document.querySelectorAll(".filter");
 let modalVisible = false;
 
+
+let allTasks = localStorage.getItem("allTasks");
+if(allTasks != null) {
+    allTasks = JSON.parse(allTasks);
+    for(let i = 0; i < allTasks.length; i++) {
+        let ticket = document.createElement("div");
+        ticket.classList.add("ticket");
+        ticket.innerHTML = `<div class="ticket-color ticket-color-${allTasks[i].priority}"></div>
+                        <div class="ticket-id">#${allTasks[i].ticketId}</div>
+                        <div class="task">${allTasks[i].task}</div>`;
+        TC.appendChild(ticket);
+        ticket.addEventListener("click", function(e) {
+            if(e.currentTarget.classList.contains("active")) {
+                e.currentTarget.classList.remove("active");
+            } else {
+                e.currentTarget.classList.add("active");
+            }
+        });
+    }
+}
+
 for(let i = 0 ; i < allFilters.length; i++) {
     allFilters[i].addEventListener("click", filterHandler);
 }
@@ -14,9 +35,15 @@ let deleteBtn = document.querySelector(".delete");
 
 deleteBtn.addEventListener("click", function(e) {
     let selectedTickets = document.querySelectorAll(".ticket.active");
+    let allTasks = JSON.parse(localStorage.getItem("allTasks"));
     for(let i = 0; i < selectedTickets.length; i++) {
         selectedTickets[i].remove();
+        let ticketID = selectedTickets[i].querySelector(".ticket-id").innerText;
+        allTasks = allTasks.filter(function(data) {
+            return (("#" + data.ticketId) != ticketID);
+        });
     }
+    localStorage.setItem("allTasks", JSON.stringify(allTasks));
 });
 
 addBtn.addEventListener("click", showModal);
@@ -79,8 +106,8 @@ function addTicket(taskModal,e) {
     console.log(e);
     if(e.key == "Enter" && e.shiftKey == false && taskModal.innerText.trim() != "") {
         let task = taskModal.innerText;
-        let ticket = document.createElement("div");
         let id = uid();
+        let ticket = document.createElement("div");
         ticket.classList.add("ticket");
         ticket.innerHTML = `<div class="ticket-color ticket-color-${selectedPriority}"></div>
                         <div class="ticket-id">#${id}</div>
@@ -96,6 +123,17 @@ function addTicket(taskModal,e) {
                 e.currentTarget.classList.add("active");
             }
         });
+
+        let allTasks = localStorage.getItem("allTasks");
+
+        if(allTasks == null) {
+            let data = [{"ticketId": id, "task": task, "priority": selectedPriority}];
+            localStorage.setItem("allTasks", JSON.stringify(data));
+        } else {
+            let data = JSON.parse(allTasks);
+            data.push({"ticketId": id, "task": task, "priority": selectedPriority});
+            localStorage.setItem("allTasks", JSON.stringify(data));
+        }
     } else if(e.key == "Enter" && e.shiftKey == false) {
         e.preventDefault();
         alert("Error! you have not type anything in task.")
