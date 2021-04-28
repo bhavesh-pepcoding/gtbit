@@ -82,6 +82,10 @@ body {
     cursor: pointer;
 }
 
+.filter.active {
+    background-color: black;
+}
+
 .add,.delete {
     height: 100%;
     width: 50%;

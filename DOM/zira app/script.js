@@ -2,33 +2,53 @@ let TC = document.querySelector(".ticket-container");
 let allFilters = document.querySelectorAll(".filter");
 let modalVisible = false;
 
-
-let allTasks = localStorage.getItem("allTasks");
-if(allTasks != null) {
-    allTasks = JSON.parse(allTasks);
-    for(let i = 0; i < allTasks.length; i++) {
-        let ticket = document.createElement("div");
-        ticket.classList.add("ticket");
-        ticket.innerHTML = `<div class="ticket-color ticket-color-${allTasks[i].priority}"></div>
-                        <div class="ticket-id">#${allTasks[i].ticketId}</div>
-                        <div class="task">${allTasks[i].task}</div>`;
-        TC.appendChild(ticket);
-        ticket.addEventListener("click", function(e) {
-            if(e.currentTarget.classList.contains("active")) {
-                e.currentTarget.classList.remove("active");
-            } else {
-                e.currentTarget.classList.add("active");
-            }
-        });
+function loadTTickets(color) {
+    let allTasks = localStorage.getItem("allTasks");
+    if(allTasks != null) {
+        allTasks = JSON.parse(allTasks);
+        if(color) {
+            allTasks = allTasks.filter(function(data) {
+                return data.priority == color;
+            })
+        }
+        for(let i = 0; i < allTasks.length; i++) {
+            let ticket = document.createElement("div");
+            ticket.classList.add("ticket");
+            ticket.innerHTML = `<div class="ticket-color ticket-color-${allTasks[i].priority}"></div>
+                            <div class="ticket-id">#${allTasks[i].ticketId}</div>
+                            <div class="task">${allTasks[i].task}</div>`;
+            TC.appendChild(ticket);
+            ticket.addEventListener("click", function(e) {
+                if(e.currentTarget.classList.contains("active")) {
+                    e.currentTarget.classList.remove("active");
+                } else {
+                    e.currentTarget.classList.add("active");
+                }
+            });
+        }
     }
 }
+
+loadTTickets();
 
 for(let i = 0 ; i < allFilters.length; i++) {
     allFilters[i].addEventListener("click", filterHandler);
 }
 
 function filterHandler (e) {
-
+    TC.innerHTML = "";
+    if(e.currentTarget.classList.contains("active")) {
+        e.currentTarget.classList.remove("active");
+        loadTTickets();
+    } else {
+        let activeFIlter = document.querySelector(".filter.active");
+        if(activeFIlter) {
+            activeFIlter.classList.remove("active");
+        }
+        e.currentTarget.classList.add("active");
+        let ticketPriority = e.currentTarget.children[0].classList[0].split("-")[0];
+        loadTTickets(ticketPriority);
+    }
 }
 let addBtn = document.querySelector(".add");
 let deleteBtn = document.querySelector(".delete");
@@ -107,22 +127,22 @@ function addTicket(taskModal,e) {
     if(e.key == "Enter" && e.shiftKey == false && taskModal.innerText.trim() != "") {
         let task = taskModal.innerText;
         let id = uid();
-        let ticket = document.createElement("div");
-        ticket.classList.add("ticket");
-        ticket.innerHTML = `<div class="ticket-color ticket-color-${selectedPriority}"></div>
-                        <div class="ticket-id">#${id}</div>
-                        <div class="task">${task}</div>`;
+        // let ticket = document.createElement("div");
+        // ticket.classList.add("ticket");
+        // ticket.innerHTML = `<div class="ticket-color ticket-color-${selectedPriority}"></div>
+        //                 <div class="ticket-id">#${id}</div>
+        //                 <div class="task">${task}</div>`;
 
         document.querySelector(".modal").remove();
         modalVisible = false;
-        TC.appendChild(ticket);
-        ticket.addEventListener("click", function(e) {
-            if(e.currentTarget.classList.contains("active")) {
-                e.currentTarget.classList.remove("active");
-            } else {
-                e.currentTarget.classList.add("active");
-            }
-        });
+        // TC.appendChild(ticket);
+        // ticket.addEventListener("click", function(e) {
+        //     if(e.currentTarget.classList.contains("active")) {
+        //         e.currentTarget.classList.remove("active");
+        //     } else {
+        //         e.currentTarget.classList.add("active");
+        //     }
+        // });
 
         let allTasks = localStorage.getItem("allTasks");
 
@@ -133,6 +153,15 @@ function addTicket(taskModal,e) {
             let data = JSON.parse(allTasks);
             data.push({"ticketId": id, "task": task, "priority": selectedPriority});
             localStorage.setItem("allTasks", JSON.stringify(data));
+        }
+
+        let activeFilter = document.querySelector(".filter.active");
+        TC.innerHTML = "";
+        if(activeFilter) {
+            let priority = activeFilter.children[0].classList[0].split("-")[0];
+            loadTTickets(priority);
+        } else {
+            loadTTickets();
         }
     } else if(e.key == "Enter" && e.shiftKey == false) {
         e.preventDefault();
