@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- ADD element-->
+    <!-- <button>create Div</button>
+    <script>
+
+        $("button").click(function(){
+            let div = $("<div></div>").css({"width": "200px", "height": "200px", "background-color": "blue"}); // creation of element with few properties
+            let p = $("<p></p>").text("hello");
+            // $("body").append(div); // adding element as a child in the end
+
+            // $("body").prepend(div);
+
+            $("body").prepend(div,p);
+        })
+    </script> -->
+
+
+    <!-- remove element -->
+    <!-- <div><p>hello</p></div>
+    <div class="test"><p>hello</p></div>
+    <button>remove Div</button>
+    <script>
+
+        $("button").click(function(){
+
+            // remove all div
+
+            $("div").remove();
+
+            // remove div with test class
+            
+            $("div").remove(".test");
+
+            $("div.test").remove();
+        })
+    </script> -->
+
+    <!-- empty the element -->
+
+    <div><p>hello</p></div>
+    <button>empty Div</button>
+    <script>
+
+        $("button").click(function(){
+            $("div").empty();
+            
+        })
+    </script>
+
+</body>
+
+</html>

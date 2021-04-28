@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <button class="slideDown">slide down</button>
+    <button class="slideUp">slide up</button>
+    <button class="toggle">toggle</button>
+    <p style="padding: 50px;">I have power to be visible and invisible</p>
+    <!-- <input type="text" /> -->
+    <script>
+        $(".slideDown").click(function(){
+            $("p").slideDown("slow");
+        })
+
+        $(".slideUp").click(function(){
+            $("p").slideUp("slow");
+        })
+
+        $(".toggle").click(function(){
+            $("p").slideToggle("slow");
+        })
+    </script>
+</body>
+</html>
