@@ -137,34 +137,69 @@ body {
     flex-wrap: wrap;
     flex-direction: row;
     width: 100vw;
-    overflow: scroll;
 }
 
 #select-all {
     width: 25px;
     height: 25px;
-    border: 1px solid;
+    border: 1px solid lightgray;
 }
 
 #columns {
     height: 25px;
-    width: calc(100vw - 42px);
-    border: 1px solid;
+    width: calc(100vw - 25px);
+    border: 1px solid lightgray;
+    display: flex;
 }
 
 #rows {
     width: 25px;
-    height: calc(76vh - 42px);
-    border: 1px solid;
+    height: calc(76vh - 25px);
+    border: 1px solid lightgray;
+    overflow: hidden;
 }
 
 #cells {
-    height: calc(76vh - 42px);
-    width: calc(100vw - 42px);
-    border: 1px solid;
+    height: calc(76vh - 25px);
+    width: calc(100vw - 25px);
+    border: 1px solid lightgray;
+    overflow: scroll;
 }
 
 .sheet-bar {
     height: 3vh;
     width: 100vw;
+}
+
+.column-name {
+    min-width: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    border-right: 0.5px solid lightgray;
+}
+
+.row-name {
+    min-height: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    border-bottom: 0.5px solid lightgray;
+}
+
+.cell-row {
+    display: flex;
+}
+
+.input-cell {
+    width: 100px;
+    min-width: 100px;
+    height: 25px;
+    min-height: 25px;
+    border-bottom: 0.5px solid lightgray;
+    border-right: 0.5px solid lightgray;
 }
