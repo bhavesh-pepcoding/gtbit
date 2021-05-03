@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    overflow: hidden;
 }
 
 * {
@@ -128,4 +129,42 @@ body {
     align-items: center;
     overflow: hidden;
     background-color: #fff;
+}
+
+.data-container {
+    display: flex;
+    height: 76vh;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100vw;
+    overflow: scroll;
+}
+
+#select-all {
+    width: 25px;
+    height: 25px;
+    border: 1px solid;
+}
+
+#columns {
+    height: 25px;
+    width: calc(100vw - 42px);
+    border: 1px solid;
+}
+
+#rows {
+    width: 25px;
+    height: calc(76vh - 42px);
+    border: 1px solid;
+}
+
+#cells {
+    height: calc(76vh - 42px);
+    width: calc(100vw - 42px);
+    border: 1px solid;
+}
+
+.sheet-bar {
+    height: 3vh;
+    width: 100vw;
 }
