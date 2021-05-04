@@ -222,7 +222,7 @@ body {
 }
 
 .input-cell.bottom-selected {
-    border-bottom: 0.5px solid lightgray
+    border-bottom: 0.5px solid lightgray;
 }
 
 .input-cell.left-selected {
