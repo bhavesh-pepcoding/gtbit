@@ -150,6 +150,7 @@ body {
     width: calc(100vw - 25px);
     border: 1px solid lightgray;
     display: flex;
+    overflow: hidden;
 }
 
 #rows {
@@ -160,6 +161,7 @@ body {
 }
 
 #cells {
+    position: relative;
     height: calc(76vh - 25px);
     width: calc(100vw - 25px);
     border: 1px solid lightgray;
@@ -202,4 +204,14 @@ body {
     min-height: 25px;
     border-bottom: 0.5px solid lightgray;
     border-right: 0.5px solid lightgray;
+    padding-left: 3px;
+    padding-right: 3px;
+    overflow: hidden;
+    font-size: 14px;
+    font-family: Noto Sans;
+}
+
+.input-cell.selected {
+    border: 3px solid #217346;
+    outline-color: #217346;
 }
