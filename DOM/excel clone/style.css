@@ -89,6 +89,7 @@ body {
     min-width: 130px;
     font-family: Noto Sans;
 }
+
 #font-size {
     width: 3.5vw;
     min-width: 55px;
@@ -214,4 +215,20 @@ body {
 .input-cell.selected {
     border: 3px solid #217346;
     outline-color: #217346;
+}
+
+.input-cell.top-selected {
+    border-top: none;
+}
+
+.input-cell.bottom-selected {
+    border-bottom: 0.5px solid lightgray
+}
+
+.input-cell.left-selected {
+    border-left: none;
+}
+
+.input-cell.right-selected {
+    border-right: 0.5px solid lightgray;
 }
