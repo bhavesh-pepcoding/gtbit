@@ -3,6 +3,13 @@ const PS = new PerfectScrollbar("#cells", {
     wheelPropagation: true,
 });
 
+function findRowCOl(ele) {
+    let idArray = $(ele).attr("id").split("-");
+    let rowId = parseInt(idArray[1]);
+    let colId = parseInt(idArray[3]);
+    return [rowId, colId];
+}
+
 for (let i = 1; i <= 100; i++) {
     let str = "";
     let n = i;
@@ -24,7 +31,7 @@ for (let i = 1; i <= 100; i++) {
 for (let i = 1; i <= 100; i++) {
     let row = $('<div class="cell-row"></div>');
     for (let j = 1; j <= 100; j++) {
-        row.append(`<div id="row-${i}-col-${j}" class="input-cell"></div>`);
+        row.append(`<div id="row-${i}-col-${j}" class="input-cell" contenteditable="false"></div>`);
     }
     $("#cells").append(row);
 }
@@ -43,14 +50,18 @@ $(".input-cell").blur(function () {
     $(this).attr("contenteditable", "false");
 });
 
-$(".input-cell").click(function (e) {
-    let idArray = $(this).attr("id").split("-");
-    let rowId = parseInt(idArray[1]);
-    let colId = parseInt(idArray[3]);
+
+function getTopBottomLeftRightCell(rowId, colId) {
     let topCell = $(`#row-${rowId - 1}-col-${colId}`);
     let bottomCell = $(`#row-${rowId + 1}-col-${colId}`);
     let leftCell = $(`#row-${rowId}-col-${colId - 1}`);
     let rightCell = $(`#row-${rowId}-col-${colId + 1}`);
+    return [topCell, bottomCell, leftCell, rightCell];
+}
+$(".input-cell").click(function (e) {
+    let [rowId, colId] = findRowCOl(this);
+    let [topCell, bottomCell, leftCell, rightCell] = getTopBottomLeftRightCell(rowId, colId);
+
 
     if ($(this).hasClass("selected")) {
         unselectCell(this, e, topCell, bottomCell, leftCell, rightCell)
@@ -61,7 +72,7 @@ $(".input-cell").click(function (e) {
 });
 
 function unselectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
-    if (e.ctrlKey) {
+    if (e.ctrlKey && $(ele).attr("contenteditable") == "false") {
         if ($(ele).hasClass("top-selected")) {
             topCell.removeClass("bottom-selected");
         }
@@ -78,11 +89,8 @@ function unselectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
     }
 }
 
-function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
-    if (e.ctrlKey) {
-        let idArray = $(ele).attr("id").split("-");
-        let rowId = parseInt(idArray[1]);
-        let colId = parseInt(idArray[3]);
+function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell, mouseSelection) {
+    if (e.ctrlKey || mouseSelection) {
 
         // top selected or not
         let topSelected;
@@ -130,4 +138,32 @@ function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
     }
 
     $(ele).addClass("selected");
+}
+let mousemoved = false;
+let startCellStored = false;
+let startCell;
+let endCell;
+$(".input-cell").mousemove(function (event) {
+    if (event.buttons == 1 && !startCellStored) {
+        $(".input-cell.selected").removeClass("selected top-selected bottom-selected right-selected left-selected");
+        startCellStored = true;
+        mousemoved = true;
+        let [rowId, colId] = findRowCOl(event.target);
+        startCell = { rowId: rowId, colId: colId };
+    } else if (event.buttons == 0 && mousemoved) {
+        startCellStored = false;
+        mousemoved = false;
+        let [rowId, colId] = findRowCOl(event.target);
+        endCell = { rowId: rowId, colId: colId };
+        selectAllBetweenTheRange(startCell, endCell);
+    }
+})
+
+function selectAllBetweenTheRange(start, end) {
+    for (let i = start.rowId; i <= end.rowId; i++) {
+        for (let j = start.colId; j <= end.colId; j++) {
+            let [topCell, bottomCell, leftCell, rightCell] = getTopBottomLeftRightCell(i, j);
+            selectCell($(`#row-${i}-col-${j}`)[0], {}, topCell, bottomCell, leftCell, rightCell, true);
+        }
+    }
 }

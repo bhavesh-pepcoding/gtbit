@@ -210,6 +210,8 @@ body {
     overflow: hidden;
     font-size: 14px;
     font-family: Noto Sans;
+    display: flex;
+    align-items: center;
 }
 
 .input-cell.selected {
