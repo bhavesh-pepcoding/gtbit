@@ -63,7 +63,7 @@ $(".input-cell").click(function (e) {
     let [topCell, bottomCell, leftCell, rightCell] = getTopBottomLeftRightCell(rowId, colId);
 
 
-    if ($(this).hasClass("selected")) {
+    if ($(this).hasClass("selected") && e.ctrlKey) {
         unselectCell(this, e, topCell, bottomCell, leftCell, rightCell)
     } else {
         selectCell(this, e, topCell, bottomCell, leftCell, rightCell);
@@ -144,24 +144,30 @@ let startCellStored = false;
 let startCell;
 let endCell;
 $(".input-cell").mousemove(function (event) {
-    if (event.buttons == 1 && !startCellStored) {
+    if (event.buttons == 1 && !event.ctrlKey) {
         $(".input-cell.selected").removeClass("selected top-selected bottom-selected right-selected left-selected");
-        startCellStored = true;
         mousemoved = true;
-        let [rowId, colId] = findRowCOl(event.target);
-        startCell = { rowId: rowId, colId: colId };
+        if(!startCellStored) {
+            let [rowId, colId] = findRowCOl(event.target);
+            startCell = { rowId: rowId, colId: colId };
+            startCellStored = true;
+        } else {
+            let [rowId, colId] = findRowCOl(event.target);
+            endCell = { rowId: rowId, colId: colId };
+            selectAllBetweenTheRange(startCell, endCell);
+        }
     } else if (event.buttons == 0 && mousemoved) {
         startCellStored = false;
         mousemoved = false;
         let [rowId, colId] = findRowCOl(event.target);
-        endCell = { rowId: rowId, colId: colId };
-        selectAllBetweenTheRange(startCell, endCell);
+            endCell = { rowId: rowId, colId: colId };
+            selectAllBetweenTheRange(startCell, endCell);
     }
 })
 
 function selectAllBetweenTheRange(start, end) {
-    for (let i = start.rowId; i <= end.rowId; i++) {
-        for (let j = start.colId; j <= end.colId; j++) {
+    for (let i = (start.rowId < end.rowId ? start.rowId : end.rowId); i <= (start.rowId < end.rowId ? end.rowId : start.rowId); i++) {
+        for (let j = (start.colId < end.colId ? start.colId : end.colId); j <= (start.colId < end.colId ? end.colId : start.colId); j++) {
             let [topCell, bottomCell, leftCell, rightCell] = getTopBottomLeftRightCell(i, j);
             selectCell($(`#row-${i}-col-${j}`)[0], {}, topCell, bottomCell, leftCell, rightCell, true);
         }
