@@ -234,3 +234,7 @@ body {
 .input-cell.right-selected {
     border-right: 0.5px solid lightgray;
 }
+
+.menu-icon.selected {
+    background-color: lightgray;
+}
