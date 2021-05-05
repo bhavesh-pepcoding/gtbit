@@ -144,6 +144,7 @@ let startCellStored = false;
 let startCell;
 let endCell;
 $(".input-cell").mousemove(function (event) {
+    event.preventDefault();
     if (event.buttons == 1 && !event.ctrlKey) {
         $(".input-cell.selected").removeClass("selected top-selected bottom-selected right-selected left-selected");
         mousemoved = true;
@@ -159,9 +160,6 @@ $(".input-cell").mousemove(function (event) {
     } else if (event.buttons == 0 && mousemoved) {
         startCellStored = false;
         mousemoved = false;
-        let [rowId, colId] = findRowCOl(event.target);
-            endCell = { rowId: rowId, colId: colId };
-            selectAllBetweenTheRange(startCell, endCell);
     }
 })
 
