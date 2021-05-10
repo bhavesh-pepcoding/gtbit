@@ -211,7 +211,8 @@ body {
     font-size: 14px;
     font-family: Noto Sans;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .input-cell.selected {

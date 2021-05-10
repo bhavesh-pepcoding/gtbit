@@ -28,11 +28,26 @@ for (let i = 1; i <= 100; i++) {
     $("#rows").append(`<div class="row-name">${i}</div>`);
 }
 
+let cellData = [];
+
 for (let i = 1; i <= 100; i++) {
     let row = $('<div class="cell-row"></div>');
+    let rowArray = [];
     for (let j = 1; j <= 100; j++) {
         row.append(`<div id="row-${i}-col-${j}" class="input-cell" contenteditable="false"></div>`);
+        rowArray.push({
+            "font-family" : "Noto Sans",
+            "font-size" : 14,
+            "text" : "",
+            "bold" : false,
+            "italic" : false,
+            "underlined" : false,
+            "alignment" : "left",
+            "color" : "",
+            "bgcolor" : ""
+        });
     }
+    cellData.push(rowArray);
     $("#cells").append(row);
 }
 
@@ -138,7 +153,28 @@ function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell, mouseSelec
     }
 
     $(ele).addClass("selected");
+    changeHeader(findRowCOl(ele));
 }
+
+function changeHeader([rowId,colId]) {
+    let data = cellData[rowId-1][colId-1];
+    $("#font-family").val(data["font-family"]);
+    $("#font-size").val(data["font-size"]);
+    $(".alignment.selected").removeClass("selected");
+    $(`.alignment[data-type=${data.alignment}]`).addClass("selected");
+    addRemoveSelectFromFontStyle(data,"bold");
+    addRemoveSelectFromFontStyle(data,"italic");
+    addRemoveSelectFromFontStyle(data,"underlined");
+}
+
+function addRemoveSelectFromFontStyle(data,property) {
+    if(data[property]) {
+        $(`#${property}`).addClass("selected");
+    } else {
+        $(`#${property}`).removeClass("selected");
+    }
+}
+
 let mousemoved = false;
 let startCellStored = false;
 let startCell;
@@ -172,30 +208,56 @@ function selectAllBetweenTheRange(start, end) {
     }
 }
 
-$("#bold").click(function(e) {
-    if($(this).hasClass("selected")) {
-        $(this).removeClass("selected");
-        $(".input-cell.selected").each(function(index,ele){
-            $(ele).html(`${$(ele).text()}`);
-        });
-    } else {
-        $(this).addClass("selected");
-        $(".input-cell.selected").each(function(index,ele){
-            $(ele).html(`<b>${$(ele).text()}</b>`);
-        });
+$(".menu-selector").change(function(e) {
+    let value = $(this).val();
+    let key = $(this).attr("id");
+    if(!isNaN(value)){
+        value = parseInt(value);
     }
+    $(".input-cell.selected").css(key,value);
+    $(".input-cell.selected").each(function(index,data) {
+        let [rowId,colId] = findRowCOl(data);
+        cellData[rowId-1][colId-1][key] = value;
+    });
+})
+
+$(".alignment").click(function(e){
+    $(".alignment.selected").removeClass("selected");
+    $(this).addClass("selected");
+    let alignment = $(this).attr("data-type");
+    $(".input-cell.selected").css("text-align",alignment);
+    $(".input-cell.selected").each(function(index,data) {
+        let [rowId,colId] = findRowCOl(data);
+        cellData[rowId-1][colId-1].alignment = alignment;
+    });
+});
+
+$("#bold").click(function(e) {
+    setFontStyle(this,"bold","font-weight","bold");
 });
 
 $("#italic").click(function(e) {
-    if($(this).hasClass("selected")) {
-        $(this).removeClass("selected");
-        $(".input-cell.selected").each(function(index,ele){
-            $(ele).html(`${$(ele).text()}`);
+    setFontStyle(this,"italic","font-style","italic");
+});
+
+$("#underlined").click(function(e) {
+    setFontStyle(this,"underlined","text-decoration","underline");
+});
+
+function setFontStyle(ele,property,key,value) {
+    if($(ele).hasClass("selected")) {
+        $(ele).removeClass("selected");
+        $(".input-cell.selected").css(key,"");
+        $(".input-cell.selected").each(function(index,data) {
+            let [rowId,colId] = findRowCOl(data);
+            cellData[rowId-1][colId-1][property] = false;
         });
     } else {
-        $(this).addClass("selected");
-        $(".input-cell.selected").each(function(index,ele){
-            $(ele).html(`<i>${$(ele).text()}</i>`);
+        $(ele).addClass("selected");
+        $(".input-cell.selected").css(key,value);
+        $(".input-cell.selected").each(function(index,data) {
+            let [rowId,colId] = findRowCOl(data);
+            cellData[rowId-1][colId-1][property] = true;
         });
     }
-});
+}
