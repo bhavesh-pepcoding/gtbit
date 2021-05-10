@@ -10,7 +10,6 @@
 (function( $ ) {
 
     $.fn.colorPick = function(config) {
-
         return this.each(function() {
             new $.colorPick(this, config || {});
         });
@@ -75,6 +74,10 @@
                 self.show(self.element, event.pageX - offset.left, event.pageY - offset.top);
 
                 $('.customColorHash').val(self.color);
+
+                $(".customColorHash").click(function(e){
+                    $(this).val("");
+                });
 
                 $('.colorPickButton').click(function(event) {
 					self.color = $(event.target).attr('hexValue');

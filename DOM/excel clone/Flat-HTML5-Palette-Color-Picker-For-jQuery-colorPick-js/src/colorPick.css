@@ -51,6 +51,8 @@
   width: 140px;
   box-sizing: content-box;
   z-index: 999;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 #colorPick span {
@@ -62,6 +64,7 @@
   margin-bottom: 5px;
   display: block;
   clear: both;
+  width: 100%;
 }
 
 .customColorHash {
