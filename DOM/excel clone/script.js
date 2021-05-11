@@ -303,5 +303,34 @@ $("#fill-color-icon,#text-color-icon").click(function(e) {
 
 $(".sheet-tab").bind("contextmenu",function(e){
     e.preventDefault();
-    console.log(e);
+    selectSheet(this);
+    $(".sheet-options-modal").remove();
+    let modal = $(`<div class="sheet-options-modal">
+                        <div class="option sheet-rename">Rename</div>
+                        <div class="option sheet-delete">Delete</div>
+                    </div>`);
+    $(".container").append(modal);
+    $(".sheet-options-modal").css({"bottom" : 0.04 * $(".container").height(), "left" : e.pageX});
+    $(".sheet-rename").click(function(e) {
+        $(".sheet-tab.selected").attr("contenteditable","true");
+        $(".sheet-tab.selected").focus();
+    });
 });
+
+function selectSheet(ele) {
+    $(".sheet-tab.selected").removeClass("selected");
+    $(ele).addClass("selected");
+}
+
+$(".container").click(function(e) {
+    $(".sheet-options-modal").remove();
+});
+
+$(".sheet-tab").blur(function(e) {
+    $(".sheet-tab").attr("contenteditable","false");
+});
+
+$(".sheet-tab.selected").focus(function(e){
+    $(this).text($(this).text())
+})
+
