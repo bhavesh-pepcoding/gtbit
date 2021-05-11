@@ -136,7 +136,7 @@ body {
 
 .data-container {
     display: flex;
-    height: 76vh;
+    height: 75vh;
     flex-wrap: wrap;
     flex-direction: row;
     width: 100vw;
@@ -158,22 +158,17 @@ body {
 
 #rows {
     width: 25px;
-    height: calc(76vh - 25px);
+    height: calc(75vh - 25px);
     border: 1px solid lightgray;
     overflow: hidden;
 }
 
 #cells {
     position: relative;
-    height: calc(76vh - 25px);
+    height: calc(75vh - 25px);
     width: calc(100vw - 25px);
     border: 1px solid lightgray;
     overflow: scroll;
-}
-
-.sheet-bar {
-    height: 3vh;
-    width: 100vw;
 }
 
 .column-name {
@@ -250,4 +245,61 @@ body {
 #text-color-icon {
     border-bottom: 4px solid #444;
     padding-bottom: 2px;
+}
+
+.sheet-bar {
+    display: flex;
+    height: 4vh;
+    width: 100vw;
+    align-items: center;
+}
+
+.sheet-scroller {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.sheet-tab-container {
+    margin-right: 10px;
+    display: flex;
+    border-left: 0.5px solid lightgray;
+}
+
+.sheet-tab {
+    display: flex;
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    border-right: 0.5px solid lightgray;
+    font-weight: 600;
+}
+
+.sheet-tab:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.sheet-tab.selected {
+    color: #217346;
+    border-bottom: 5px solid #217346;
+}
+
+.sheet-tab.selected:hover {
+    background-color: #fff;
+    cursor: default;
+}
+
+.add-sheet {
+    color: #217346;
+}
+
+.add-sheet:hover, .scroller:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+.scroller {
+    font-size: 30px;
 }

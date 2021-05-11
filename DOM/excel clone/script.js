@@ -301,3 +301,7 @@ $("#fill-color-icon,#text-color-icon").click(function(e) {
     }, 10);
 });
 
+$(".sheet-tab").bind("contextmenu",function(e){
+    e.preventDefault();
+    console.log(e);
+});
