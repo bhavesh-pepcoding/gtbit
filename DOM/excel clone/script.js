@@ -28,42 +28,91 @@ for (let i = 1; i <= 100; i++) {
     $("#rows").append(`<div class="row-name">${i}</div>`);
 }
 
-let cellData = [];
-
-for (let i = 1; i <= 100; i++) {
-    let row = $('<div class="cell-row"></div>');
-    let rowArray = [];
-    for (let j = 1; j <= 100; j++) {
-        row.append(`<div id="row-${i}-col-${j}" class="input-cell" contenteditable="false"></div>`);
-        rowArray.push({
-            "font-family": "Noto Sans",
-            "font-size": 14,
-            "text": "",
-            "bold": false,
-            "italic": false,
-            "underlined": false,
-            "alignment": "left",
-            "color": "#444",
-            "bgcolor": "#fff"
-        });
-    }
-    cellData.push(rowArray);
-    $("#cells").append(row);
-}
 
 $("#cells").scroll(function () {
     $("#columns").scrollLeft(this.scrollLeft);
     $("#rows").scrollTop(this.scrollTop);
 });
 
-$(".input-cell").dblclick(function () {
-    $(this).attr("contenteditable", "true");
-    $(this).focus();
-});
+let cellData = {"Sheet1" : []};
+let totalSheets = 1;
+let selectedSheet = "Sheet1";
+let mousemoved = false;
+let startCellStored = false;
+let startCell;
+let endCell;
 
-$(".input-cell").blur(function () {
-    $(this).attr("contenteditable", "false");
-});
+function loadNewSheet() {
+    $("#cells").text("");
+    for (let i = 1; i <= 100; i++) {
+        let row = $('<div class="cell-row"></div>');
+        let rowArray = [];
+        for (let j = 1; j <= 100; j++) {
+            row.append(`<div id="row-${i}-col-${j}" class="input-cell" contenteditable="false"></div>`);
+            rowArray.push({
+                "font-family": "Noto Sans",
+                "font-size": 14,
+                "text": "",
+                "bold": false,
+                "italic": false,
+                "underlined": false,
+                "alignment": "left",
+                "color": "#444",
+                "bgcolor": "#fff"
+            });
+        }
+        cellData[selectedSheet].push(rowArray);
+        $("#cells").append(row);
+    }
+    addEventsToCells();
+}
+
+loadNewSheet();
+
+function addEventsToCells () {
+    $(".input-cell").dblclick(function () {
+        $(this).attr("contenteditable", "true");
+        $(this).focus();
+    });
+    
+    $(".input-cell").blur(function () {
+        $(this).attr("contenteditable", "false");
+        let [rowId,colId] = findRowCOl(this);
+        cellData[selectedSheet][rowId-1][colId-1].text = $(this).text();
+    });
+
+    $(".input-cell").click(function (e) {
+        let [rowId, colId] = findRowCOl(this);
+        let [topCell, bottomCell, leftCell, rightCell] = getTopBottomLeftRightCell(rowId, colId);
+    
+    
+        if ($(this).hasClass("selected") && e.ctrlKey) {
+            unselectCell(this, e, topCell, bottomCell, leftCell, rightCell)
+        } else {
+            selectCell(this, e, topCell, bottomCell, leftCell, rightCell);
+        }
+    
+    });
+    $(".input-cell").mousemove(function (event) {
+        event.preventDefault();
+        if (event.buttons == 1 && !event.ctrlKey) {
+            $(".input-cell.selected").removeClass("selected top-selected bottom-selected right-selected left-selected");
+            mousemoved = true;
+            if (!startCellStored) {
+                let [rowId, colId] = findRowCOl(event.target);
+                startCell = { rowId: rowId, colId: colId };
+                startCellStored = true;
+            } else {
+                let [rowId, colId] = findRowCOl(event.target);
+                endCell = { rowId: rowId, colId: colId };
+                selectAllBetweenTheRange(startCell, endCell);
+            }
+        } else if (event.buttons == 0 && mousemoved) {
+            startCellStored = false;
+            mousemoved = false;
+        }
+    })
+}
 
 
 function getTopBottomLeftRightCell(rowId, colId) {
@@ -73,18 +122,7 @@ function getTopBottomLeftRightCell(rowId, colId) {
     let rightCell = $(`#row-${rowId}-col-${colId + 1}`);
     return [topCell, bottomCell, leftCell, rightCell];
 }
-$(".input-cell").click(function (e) {
-    let [rowId, colId] = findRowCOl(this);
-    let [topCell, bottomCell, leftCell, rightCell] = getTopBottomLeftRightCell(rowId, colId);
 
-
-    if ($(this).hasClass("selected") && e.ctrlKey) {
-        unselectCell(this, e, topCell, bottomCell, leftCell, rightCell)
-    } else {
-        selectCell(this, e, topCell, bottomCell, leftCell, rightCell);
-    }
-
-});
 
 function unselectCell(ele, e, topCell, bottomCell, leftCell, rightCell) {
     if (e.ctrlKey && $(ele).attr("contenteditable") == "false") {
@@ -157,7 +195,7 @@ function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell, mouseSelec
 }
 
 function changeHeader([rowId, colId]) {
-    let data = cellData[rowId - 1][colId - 1];
+    let data = cellData[selectedSheet][rowId - 1][colId - 1];
     $("#font-family").val(data["font-family"]);
     $("#font-family").css("font-family",data["font-family"]);
     $("#font-size").val(data["font-size"]);
@@ -178,29 +216,6 @@ function addRemoveSelectFromFontStyle(data, property) {
     }
 }
 
-let mousemoved = false;
-let startCellStored = false;
-let startCell;
-let endCell;
-$(".input-cell").mousemove(function (event) {
-    event.preventDefault();
-    if (event.buttons == 1 && !event.ctrlKey) {
-        $(".input-cell.selected").removeClass("selected top-selected bottom-selected right-selected left-selected");
-        mousemoved = true;
-        if (!startCellStored) {
-            let [rowId, colId] = findRowCOl(event.target);
-            startCell = { rowId: rowId, colId: colId };
-            startCellStored = true;
-        } else {
-            let [rowId, colId] = findRowCOl(event.target);
-            endCell = { rowId: rowId, colId: colId };
-            selectAllBetweenTheRange(startCell, endCell);
-        }
-    } else if (event.buttons == 0 && mousemoved) {
-        startCellStored = false;
-        mousemoved = false;
-    }
-})
 
 function selectAllBetweenTheRange(start, end) {
     for (let i = (start.rowId < end.rowId ? start.rowId : end.rowId); i <= (start.rowId < end.rowId ? end.rowId : start.rowId); i++) {
@@ -223,7 +238,7 @@ $(".menu-selector").change(function (e) {
     $(".input-cell.selected").css(key, value);
     $(".input-cell.selected").each(function (index, data) {
         let [rowId, colId] = findRowCOl(data);
-        cellData[rowId - 1][colId - 1][key] = value;
+        cellData[selectedSheet][rowId - 1][colId - 1][key] = value;
     });
 })
 
@@ -234,7 +249,7 @@ $(".alignment").click(function (e) {
     $(".input-cell.selected").css("text-align", alignment);
     $(".input-cell.selected").each(function (index, data) {
         let [rowId, colId] = findRowCOl(data);
-        cellData[rowId - 1][colId - 1].alignment = alignment;
+        cellData[selectedSheet][rowId - 1][colId - 1].alignment = alignment;
     });
 });
 
@@ -256,14 +271,14 @@ function setFontStyle(ele, property, key, value) {
         $(".input-cell.selected").css(key, "");
         $(".input-cell.selected").each(function (index, data) {
             let [rowId, colId] = findRowCOl(data);
-            cellData[rowId - 1][colId - 1][property] = false;
+            cellData[selectedSheet][rowId - 1][colId - 1][property] = false;
         });
     } else {
         $(ele).addClass("selected");
         $(".input-cell.selected").css(key, value);
         $(".input-cell.selected").each(function (index, data) {
             let [rowId, colId] = findRowCOl(data);
-            cellData[rowId - 1][colId - 1][property] = true;
+            cellData[selectedSheet][rowId - 1][colId - 1][property] = true;
         });
     }
 }
@@ -281,14 +296,14 @@ $(".color-pick").colorPick({
                 $(".input-cell.selected").css("background-color",this.color);
                 $(".input-cell.selected").each((index,data) => {
                     let [rowId,colId] = findRowCOl(data);
-                    cellData[rowId-1][colId-1].bgcolor = this.color;
+                    cellData[selectedSheet][rowId-1][colId-1].bgcolor = this.color;
                 });
             } else {
                 $("#text-color-icon").css("border-bottom",`4px solid ${this.color}`);
                 $(".input-cell.selected").css("color",this.color);
                 $(".input-cell.selected").each((index,data) => {
                     let [rowId,colId] = findRowCOl(data);
-                    cellData[rowId-1][colId-1].color = this.color;
+                    cellData[selectedSheet][rowId-1][colId-1].color = this.color;
                 });
             }
         }
@@ -320,12 +335,86 @@ $(".container").click(function(e) {
     $(".sheet-options-modal").remove();
 });
 
-$(".sheet-tab").click(function(e) {
+$(".sheet-tab").bind("contextmenu",function(e){
+    e.preventDefault();
     selectSheet(this);
+    $(".sheet-options-modal").remove();
+    let modal = $(`<div class="sheet-options-modal">
+                        <div class="option sheet-rename">Rename</div>
+                        <div class="option sheet-delete">Delete</div>
+                    </div>`);
+    $(".container").append(modal);
+    $(".sheet-options-modal").css({"bottom" : 0.04 * $(".container").height(), "left" : e.pageX});
+    $(".sheet-rename").click(function(e) {
+        
+    });
 });
+$(".sheet-tab").click(function(e) {
+    if(!$(this).hasClass("selected")) {
+        selectSheet(this);
+    }
+});
+
 
 function selectSheet(ele) {
     $(".sheet-tab.selected").removeClass("selected");
     $(ele).addClass("selected");
+    selectedSheet = $(ele).text();
+    loadSheet();
 }
 
+function loadSheet() {
+    $("#cells").text("");
+    let data = cellData[selectedSheet];
+    for(let i = 1; i <= data.length; i++) {
+        let row = $('<div class="cell-row"></div>');
+        for(let j = 1; j <= data[i-1].length; j++) {
+            let cell = $(`<div id="row-${i}-col-${j}" class="input-cell" contenteditable="false">${data[i-1][j-1].text}</div>`);
+            cell.css({
+                "font-family" : data[i-1][j-1]["font-family"],
+                "font-size" : data[i-1][j-1]["font-size"] + "px",
+                "background-color" : data[i-1][j-1]["bgcolor"],
+                "color": data[i-1][j-1].color,
+                "font-weight" : data[i-1][j-1].bold ? "bold" : "",
+                "font-style" : data[i-1][j-1].italic ? "italic" : "",
+                "text-decoration" : data[i-1][j-1].underlined ? "underline" : "",
+                "text-align" : data[i-1][j-1].alignment 
+            })
+            row.append(cell);
+        }
+        $("#cells").append(row);
+    }
+    addEventsToCells();
+}
+
+$(".add-sheet").click(function(e){
+    totalSheets++;
+    cellData[`Sheet${totalSheets}`] = [];
+    selectedSheet = `Sheet${totalSheets}`;
+    loadNewSheet();
+    $(".sheet-tab.selected").removeClass("selected");
+    $(".sheet-tab-container").append(
+        `<div class="sheet-tab selected">Sheet${totalSheets}</div>`
+    );
+    
+    $(".sheet-tab").off("bind","click");
+    $(".sheet-tab").bind("contextmenu",function(e){
+        e.preventDefault();
+        selectSheet(this);
+        $(".sheet-options-modal").remove();
+        let modal = $(`<div class="sheet-options-modal">
+                            <div class="option sheet-rename">Rename</div>
+                            <div class="option sheet-delete">Delete</div>
+                        </div>`);
+        $(".container").append(modal);
+        $(".sheet-options-modal").css({"bottom" : 0.04 * $(".container").height(), "left" : e.pageX});
+        $(".sheet-rename").click(function(e) {
+            
+        });
+    });
+    $(".sheet-tab").click(function(e) {
+        if(!$(this).hasClass("selected")) {
+            selectSheet(this);
+        }
+    });
+});
