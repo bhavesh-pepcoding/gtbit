@@ -320,3 +320,77 @@ body {
     background-color: lightgray;
     cursor: default;
 }
+
+.sheet-modal-parent {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sheet-rename-modal {
+    position: absolute;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 13%) 0px 6.4px 14.4px 0px, rgb(0 0 0 / 11%) 0px 1.2px 3.6px 0px;
+    padding: 15px;
+    min-width: 400px;
+}
+
+.sheet-modal-title {
+    text-align: center;
+    font-size: 24px;
+    color: #217346;
+    font-weight: bold;
+}
+
+.sheet-modal-input-container {
+    padding: 20px;
+}
+
+.sheet-modal-input-title {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.sheet-modal-input {
+    width: 100%;
+    height: 2rem;
+    font-size: 1.2rem;
+    outline-color: #217346;
+}
+
+.sheet-modal-confirmation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 15px;
+}
+.button {
+    border: 1px solid;
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ok-button {
+    background-color: #217346;
+    color: #fff;
+}
+
+.ok-button:hover {
+    background-color: #175533;
+    cursor: pointer;
+}
+
+.cancel-button:hover {
+    background-color: rgb(233, 233, 233);
+    cursor: pointer;
+}
