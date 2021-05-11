@@ -332,7 +332,7 @@ body {
     align-items: center;
 }
 
-.sheet-rename-modal {
+.sheet-rename-modal, .sheet-delete-modal {
     position: absolute;
     background-color: #fff;
     box-shadow: rgb(0 0 0 / 13%) 0px 6.4px 14.4px 0px, rgb(0 0 0 / 11%) 0px 1.2px 3.6px 0px;
@@ -347,8 +347,14 @@ body {
     font-weight: bold;
 }
 
-.sheet-modal-input-container {
+.sheet-modal-input-container, .sheet-modal-detail-container {
     padding: 20px;
+}
+
+.sheet-modal-detail-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sheet-modal-input-title {
@@ -380,17 +386,33 @@ body {
     align-items: center;
 }
 
-.ok-button {
+.ok-button, .delete-button {
     background-color: #217346;
     color: #fff;
+    height: 40px;
+    border-radius: 3px;
 }
 
-.ok-button:hover {
+.ok-button:hover, .delete-button:hover {
     background-color: #175533;
     cursor: pointer;
+}
+
+.cancel-button {
+    height: 40px;
+    border-radius: 3px;
 }
 
 .cancel-button:hover {
     background-color: rgb(233, 233, 233);
     cursor: pointer;
+}
+
+.sheet-modal-detail-title {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.delete-icon {
+    margin-right: 5px;
 }
