@@ -416,3 +416,18 @@ body {
 .delete-icon {
     margin-right: 5px;
 }
+
+.loader-parent {
+    background-color: rgba(255, 255, 255, 0.5);
+    flex-direction: column;
+}
+
+.loading {
+    font-size: 30px;
+    color: #217346;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+}
