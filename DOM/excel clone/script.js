@@ -323,10 +323,14 @@ $(".container").click(function(e) {
 
 
 function selectSheet(ele) {
+    addLoader();
     $(".sheet-tab.selected").removeClass("selected");
     $(ele).addClass("selected");
     selectedSheet = $(ele).text();
-    loadSheet();
+    setTimeout(() => {
+        loadSheet();
+        removeLoader();
+    }, 10);
 }
 
 function loadSheet() {
@@ -353,7 +357,18 @@ function loadSheet() {
     addEventsToCells();
 }
 
+function addLoader() {
+    console.log("hello");
+    $(".container").append(`<div class="sheet-modal-parent loader-parent">
+                                <div class="loading">Loading...</div>
+                            </div>`);
+}
+
+function removeLoader() {
+    $(".loader-parent").remove();
+}
 $(".add-sheet").click(function(e){
+    addLoader();
     totalSheets++;
     cellData[`Sheet${totalSheets}`] = [];
     selectedSheet = `Sheet${totalSheets}`;
@@ -361,7 +376,10 @@ $(".add-sheet").click(function(e){
     $(".sheet-tab-container").append(
         `<div class="sheet-tab selected">Sheet${totalSheets}</div>`
     );
-    loadNewSheet();
+    setTimeout(() => {
+        loadNewSheet();
+        removeLoader();
+    }, 10);
 });
 
 function addSheetTabEventListeners() {
