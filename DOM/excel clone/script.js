@@ -65,6 +65,7 @@ function loadNewSheet() {
         $("#cells").append(row);
     }
     addEventsToCells();
+    addSheetTabEventListeners();
 }
 
 loadNewSheet();
@@ -316,43 +317,8 @@ $("#fill-color-icon,#text-color-icon").click(function(e) {
     }, 10);
 });
 
-$(".sheet-tab").bind("contextmenu",function(e){
-    e.preventDefault();
-    selectSheet(this);
-    $(".sheet-options-modal").remove();
-    let modal = $(`<div class="sheet-options-modal">
-                        <div class="option sheet-rename">Rename</div>
-                        <div class="option sheet-delete">Delete</div>
-                    </div>`);
-    $(".container").append(modal);
-    $(".sheet-options-modal").css({"bottom" : 0.04 * $(".container").height(), "left" : e.pageX});
-    $(".sheet-rename").click(function(e) {
-        
-    });
-});
-
 $(".container").click(function(e) {
     $(".sheet-options-modal").remove();
-});
-
-$(".sheet-tab").bind("contextmenu",function(e){
-    e.preventDefault();
-    selectSheet(this);
-    $(".sheet-options-modal").remove();
-    let modal = $(`<div class="sheet-options-modal">
-                        <div class="option sheet-rename">Rename</div>
-                        <div class="option sheet-delete">Delete</div>
-                    </div>`);
-    $(".container").append(modal);
-    $(".sheet-options-modal").css({"bottom" : 0.04 * $(".container").height(), "left" : e.pageX});
-    $(".sheet-rename").click(function(e) {
-        
-    });
-});
-$(".sheet-tab").click(function(e) {
-    if(!$(this).hasClass("selected")) {
-        selectSheet(this);
-    }
 });
 
 
@@ -379,7 +345,7 @@ function loadSheet() {
                 "font-style" : data[i-1][j-1].italic ? "italic" : "",
                 "text-decoration" : data[i-1][j-1].underlined ? "underline" : "",
                 "text-align" : data[i-1][j-1].alignment 
-            })
+            });
             row.append(cell);
         }
         $("#cells").append(row);
@@ -391,16 +357,16 @@ $(".add-sheet").click(function(e){
     totalSheets++;
     cellData[`Sheet${totalSheets}`] = [];
     selectedSheet = `Sheet${totalSheets}`;
-    loadNewSheet();
     $(".sheet-tab.selected").removeClass("selected");
     $(".sheet-tab-container").append(
         `<div class="sheet-tab selected">Sheet${totalSheets}</div>`
     );
-    
-    $(".sheet-tab").off("bind","click");
-    $(".sheet-tab").bind("contextmenu",function(e){
+    loadNewSheet();
+});
+
+function addSheetTabEventListeners() {
+    $(".sheet-tab.selected").bind("contextmenu",function(e){
         e.preventDefault();
-        selectSheet(this);
         $(".sheet-options-modal").remove();
         let modal = $(`<div class="sheet-options-modal">
                             <div class="option sheet-rename">Rename</div>
@@ -411,10 +377,14 @@ $(".add-sheet").click(function(e){
         $(".sheet-rename").click(function(e) {
             
         });
-    });
-    $(".sheet-tab").click(function(e) {
         if(!$(this).hasClass("selected")) {
             selectSheet(this);
         }
     });
-});
+
+    $(".sheet-tab.selected").click(function(e) {
+        if(!$(this).hasClass("selected")) {
+            selectSheet(this);
+        }
+    });
+}
