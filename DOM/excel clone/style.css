@@ -256,7 +256,7 @@ body {
 }
 
 .sheet-scroller {
-    margin-right: 20px;
+    margin-right: 10px;
     display: flex;
     align-items: center;
 }
@@ -265,6 +265,7 @@ body {
     margin-right: 10px;
     display: flex;
     border-left: 0.5px solid lightgray;
+    overflow: scroll;
 }
 
 .sheet-tab {
@@ -295,6 +296,7 @@ body {
 
 .add-sheet {
     color: #217346;
+    margin-right: 10px;
 }
 
 .add-sheet:hover, .scroller:hover {
@@ -377,6 +379,7 @@ body {
     justify-content: space-evenly;
     padding: 15px;
 }
+
 .button {
     border: 1px solid;
     width: 100px;
@@ -430,4 +433,13 @@ body {
 .error {
     color: red;
     font-size: 14px;
+}
+
+.sheet-tab-container::-webkit-scrollbar {
+    display: none;
+}
+
+.sheet-tab-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

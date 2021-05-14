@@ -71,6 +71,24 @@ function loadNewSheet() {
 
 loadNewSheet();
 
+// function addNewSheet() {
+//     $(".input-cell").text("");
+//     $(".input-cell").css(
+//         {
+//             "font-family": "Noto Sans",
+//             "font-size": 14,
+//             "text": "",
+//             "bold": false,
+//             "italic": false,
+//             "underlined": false,
+//             "alignment": "left",
+//             "color": "#444",
+//             "background-color": "#fff"
+//         }
+//     );
+//     addSheetTabEventListeners();
+// }
+
 function addEventsToCells() {
     $(".input-cell").dblclick(function () {
         $(this).attr("contenteditable", "true");
@@ -372,7 +390,7 @@ $(".add-sheet").click(function (e) {
     addLoader();
     totalSheets++;
     lastlyAddedSheetNumber++;
-    while(Object.keys(cellData).includes("Sheet" + lastlyAddedSheetNumber)) {
+    while (Object.keys(cellData).includes("Sheet" + lastlyAddedSheetNumber)) {
         lastlyAddedSheetNumber++;
     }
     cellData[`Sheet${lastlyAddedSheetNumber}`] = [];
@@ -381,6 +399,7 @@ $(".add-sheet").click(function (e) {
     $(".sheet-tab-container").append(
         `<div class="sheet-tab selected">Sheet${lastlyAddedSheetNumber}</div>`
     );
+    $(".sheet-tab.selected")[0].scrollIntoView();
     setTimeout(() => {
         loadNewSheet();
         removeLoader();
@@ -420,14 +439,14 @@ function addSheetTabEventListeners() {
             $(".ok-button").click(function (e) {
                 renameSheet();
             });
-            $(".sheet-modal-input").keypress(function(e) {
-                if(e.key == "Enter") {
+            $(".sheet-modal-input").keypress(function (e) {
+                if (e.key == "Enter") {
                     renameSheet();
                 }
             })
         });
 
-        $(".sheet-delete").click(function(e) {
+        $(".sheet-delete").click(function (e) {
             let deleteModal = `<div class="sheet-modal-parent">
             <div class="sheet-delete-modal">
                 <div class="sheet-modal-title">
@@ -445,30 +464,28 @@ function addSheetTabEventListeners() {
                 </div>
             </div>
         </div>`;
-        $(".container").append(deleteModal);
-        $(".cancel-button").click(function (e) {
-            $(".sheet-modal-parent").remove();
-        });
-        $(".delete-button").click(function(e) {
-            if(totalSheets > 1) {
+            $(".container").append(deleteModal);
+            $(".cancel-button").click(function (e) {
                 $(".sheet-modal-parent").remove();
-                let keysArray = Object.keys(cellData);
-                let selectedSheetIndex = keysArray.indexOf(selectedSheet);
-                let currentSelectedSheet = $(".sheet-tab.selected");
-                delete cellData[selectedSheet];
-                if(selectedSheetIndex == 0) {
-                    currentSelectedSheet.next().addClass("selected");
-                    currentSelectedSheet.remove();
-                    selectedSheet = keysArray[1];
-                } else {
-                    currentSelectedSheet.prev().addClass("selected");
-                    currentSelectedSheet.remove();
-                    selectedSheet = keysArray[selectedSheetIndex - 1];
+            });
+            $(".delete-button").click(function (e) {
+                if (totalSheets > 1) {
+                    $(".sheet-modal-parent").remove();
+                    let keysArray = Object.keys(cellData);
+                    let selectedSheetIndex = keysArray.indexOf(selectedSheet);
+                    let currentSelectedSheet = $(".sheet-tab.selected");
+                    delete cellData[selectedSheet];
+                    if (selectedSheetIndex == 0) {
+                        selectSheet(currentSelectedSheet.next()[0]);
+                        currentSelectedSheet.remove();
+                    } else {
+                        selectSheet(currentSelectedSheet.prev()[0]);
+                        currentSelectedSheet.remove();
+                    }
+                    selectSheet($(".sheet-tab.selected")[0]);
+                    totalSheets--;
                 }
-                selectSheet($(".sheet-tab.selected")[0]);
-                totalSheets--;
-            }
-        })
+            })
         })
         if (!$(this).hasClass("selected")) {
             selectSheet(this);
@@ -484,7 +501,7 @@ function addSheetTabEventListeners() {
 
 function renameSheet() {
     let newSheetName = $(".sheet-modal-input").val();
-    if(newSheetName && !Object.keys(cellData).includes(newSheetName)) {
+    if (newSheetName && !Object.keys(cellData).includes(newSheetName)) {
         cellData[newSheetName] = cellData[selectedSheet];
         delete cellData[selectedSheet];
         selectedSheet = newSheetName;
@@ -497,3 +514,22 @@ function renameSheet() {
         `);
     }
 }
+
+$(".left-scroller").click(function (e) {
+
+    let keysArray = Object.keys(cellData);
+    let selectedSheetIndex = keysArray.indexOf(selectedSheet);
+    if (selectedSheetIndex != 0) {
+        selectSheet($(".sheet-tab.selected").prev()[0]);
+    }
+    $(".sheet-tab.selected")[0].scrollIntoView();
+});
+
+$(".right-scroller").click(function (e) {
+    let keysArray = Object.keys(cellData);
+    let selectedSheetIndex = keysArray.indexOf(selectedSheet);
+    if (selectedSheetIndex != (keysArray.length - 1)) {
+        selectSheet($(".sheet-tab.selected").next()[0]);
+    }
+    $(".sheet-tab.selected")[0].scrollIntoView();
+})
