@@ -213,17 +213,22 @@ function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell, mouseSelec
 }
 
 function changeHeader([rowId, colId]) {
-    // let data = cellData[selectedSheet][rowId - 1][colId - 1];
-    // $("#font-family").val(data["font-family"]);
-    // $("#font-family").css("font-family", data["font-family"]);
-    // $("#font-size").val(data["font-size"]);
-    // $(".alignment.selected").removeClass("selected");
-    // $(`.alignment[data-type=${data.alignment}]`).addClass("selected");
-    // addRemoveSelectFromFontStyle(data, "bold");
-    // addRemoveSelectFromFontStyle(data, "italic");
-    // addRemoveSelectFromFontStyle(data, "underlined");
-    // $("#fill-color-icon").css("border-bottom", `4px solid ${data.bgcolor}`);
-    // $("#text-color-icon").css("border-bottom", `4px solid ${data.color}`);
+    let data;
+    if(cellData[selectedSheet][rowId - 1] && cellData[selectedSheet][rowId - 1][colId - 1]) {
+        data = cellData[selectedSheet][rowId - 1][colId - 1];
+    } else {
+        data = defaultProperties;
+    }
+    $("#font-family").val(data["font-family"]);
+    $("#font-family").css("font-family", data["font-family"]);
+    $("#font-size").val(data["font-size"]);
+    $(".alignment.selected").removeClass("selected");
+    $(`.alignment[data-type=${data.alignment}]`).addClass("selected");
+    addRemoveSelectFromFontStyle(data, "bold");
+    addRemoveSelectFromFontStyle(data, "italic");
+    addRemoveSelectFromFontStyle(data, "underlined");
+    $("#fill-color-icon").css("border-bottom", `4px solid ${data.bgcolor}`);
+    $("#text-color-icon").css("border-bottom", `4px solid ${data.color}`);
 }
 
 function addRemoveSelectFromFontStyle(data, property) {
@@ -448,6 +453,7 @@ $(".add-sheet").click(function (e) {
     );
     $(".sheet-tab.selected")[0].scrollIntoView();
     addSheetTabEventListeners();
+    $("#row-1-col-1").click();
 });
 
 function addSheetTabEventListeners() {
@@ -540,6 +546,7 @@ function addSheetTabEventListeners() {
     $(".sheet-tab.selected").click(function (e) {
         if (!$(this).hasClass("selected")) {
             selectSheet(this);
+            $("#row-1-col-1").click();
         }
     });
 }

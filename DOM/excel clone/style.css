@@ -443,3 +443,60 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+.file-modal {
+    position: absolute;
+    top: 0;
+    left:0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+
+.file-options-modal {
+    width: 12rem;
+    background-color: #217346;
+    height: 100%;
+    color: #fff;
+}
+
+.file-recent-modal {
+    background-color: #fff;
+    height: 100%;
+    width: calc(50% - 12rem);
+}
+
+.close, .new, .open, .save {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    font-size: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.close-icon, .new-icon, .save-icon, .open-icon {
+    position: absolute;
+    left: 2rem;
+}
+
+.close {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.close-icon {
+    transform: rotate(90deg);
+}
+
+.close:hover, .new:hover, .save:hover, .open:hover {
+    background-color: #1c683e;
+    cursor: pointer;
+}
+
+.file-transparent-modal {
+    width: 50%;
+    height: 100%;
+}
