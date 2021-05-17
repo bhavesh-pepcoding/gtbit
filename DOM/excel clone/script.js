@@ -34,7 +34,7 @@ $("#cells").scroll(function () {
     $("#rows").scrollTop(this.scrollTop);
 });
 
-let cellData = { "Sheet1": [] };
+let cellData = { "Sheet1": {} };
 let totalSheets = 1;
 let lastlyAddedSheetNumber = 1;
 let selectedSheet = "Sheet1";
@@ -42,27 +42,24 @@ let mousemoved = false;
 let startCellStored = false;
 let startCell;
 let endCell;
-
+let defaultProperties = {
+    "font-family": "Noto Sans",
+    "font-size": 14,
+    "text": "",
+    "bold": false,
+    "italic": false,
+    "underlined": false,
+    "alignment": "left",
+    "color": "#444",
+    "bgcolor": "#fff"
+};
 function loadNewSheet() {
     $("#cells").text("");
     for (let i = 1; i <= 100; i++) {
         let row = $('<div class="cell-row"></div>');
-        let rowArray = [];
         for (let j = 1; j <= 100; j++) {
             row.append(`<div id="row-${i}-col-${j}" class="input-cell" contenteditable="false"></div>`);
-            rowArray.push({
-                "font-family": "Noto Sans",
-                "font-size": 14,
-                "text": "",
-                "bold": false,
-                "italic": false,
-                "underlined": false,
-                "alignment": "left",
-                "color": "#444",
-                "bgcolor": "#fff"
-            });
         }
-        cellData[selectedSheet].push(rowArray);
         $("#cells").append(row);
     }
     addEventsToCells();
@@ -97,8 +94,8 @@ function addEventsToCells() {
 
     $(".input-cell").blur(function () {
         $(this).attr("contenteditable", "false");
-        let [rowId, colId] = findRowCOl(this);
-        cellData[selectedSheet][rowId - 1][colId - 1].text = $(this).text();
+        // cellData[selectedSheet][rowId - 1][colId - 1].text = $(this).text();
+        updateCellData("text",$(this).text());
     });
 
     $(".input-cell").click(function (e) {
@@ -215,17 +212,17 @@ function selectCell(ele, e, topCell, bottomCell, leftCell, rightCell, mouseSelec
 }
 
 function changeHeader([rowId, colId]) {
-    let data = cellData[selectedSheet][rowId - 1][colId - 1];
-    $("#font-family").val(data["font-family"]);
-    $("#font-family").css("font-family", data["font-family"]);
-    $("#font-size").val(data["font-size"]);
-    $(".alignment.selected").removeClass("selected");
-    $(`.alignment[data-type=${data.alignment}]`).addClass("selected");
-    addRemoveSelectFromFontStyle(data, "bold");
-    addRemoveSelectFromFontStyle(data, "italic");
-    addRemoveSelectFromFontStyle(data, "underlined");
-    $("#fill-color-icon").css("border-bottom", `4px solid ${data.bgcolor}`);
-    $("#text-color-icon").css("border-bottom", `4px solid ${data.color}`);
+    // let data = cellData[selectedSheet][rowId - 1][colId - 1];
+    // $("#font-family").val(data["font-family"]);
+    // $("#font-family").css("font-family", data["font-family"]);
+    // $("#font-size").val(data["font-size"]);
+    // $(".alignment.selected").removeClass("selected");
+    // $(`.alignment[data-type=${data.alignment}]`).addClass("selected");
+    // addRemoveSelectFromFontStyle(data, "bold");
+    // addRemoveSelectFromFontStyle(data, "italic");
+    // addRemoveSelectFromFontStyle(data, "underlined");
+    // $("#fill-color-icon").css("border-bottom", `4px solid ${data.bgcolor}`);
+    // $("#text-color-icon").css("border-bottom", `4px solid ${data.color}`);
 }
 
 function addRemoveSelectFromFontStyle(data, property) {
@@ -256,10 +253,12 @@ $(".menu-selector").change(function (e) {
         value = parseInt(value);
     }
     $(".input-cell.selected").css(key, value);
-    $(".input-cell.selected").each(function (index, data) {
-        let [rowId, colId] = findRowCOl(data);
-        cellData[selectedSheet][rowId - 1][colId - 1][key] = value;
-    });
+    // $(".input-cell.selected").each(function (index, data) {
+    //     let [rowId, colId] = findRowCOl(data);
+        // cellData[selectedSheet][rowId - 1][colId - 1][key] = value;
+        
+    // });
+    updateCellData(key,value);
 })
 
 $(".alignment").click(function (e) {
@@ -267,10 +266,11 @@ $(".alignment").click(function (e) {
     $(this).addClass("selected");
     let alignment = $(this).attr("data-type");
     $(".input-cell.selected").css("text-align", alignment);
-    $(".input-cell.selected").each(function (index, data) {
-        let [rowId, colId] = findRowCOl(data);
-        cellData[selectedSheet][rowId - 1][colId - 1].alignment = alignment;
-    });
+    // $(".input-cell.selected").each(function (index, data) {
+    //     let [rowId, colId] = findRowCOl(data);
+    //     cellData[selectedSheet][rowId - 1][colId - 1].alignment = alignment;
+    // });
+    updateCellData("alignment",alignment);
 });
 
 $("#bold").click(function (e) {
@@ -289,19 +289,54 @@ function setFontStyle(ele, property, key, value) {
     if ($(ele).hasClass("selected")) {
         $(ele).removeClass("selected");
         $(".input-cell.selected").css(key, "");
-        $(".input-cell.selected").each(function (index, data) {
-            let [rowId, colId] = findRowCOl(data);
-            cellData[selectedSheet][rowId - 1][colId - 1][property] = false;
-        });
+        // $(".input-cell.selected").each(function (index, data) {
+        //     let [rowId, colId] = findRowCOl(data);
+        //     cellData[selectedSheet][rowId - 1][colId - 1][property] = false;
+        // });
+        updateCellData(property,false);
     } else {
         $(ele).addClass("selected");
         $(".input-cell.selected").css(key, value);
-        $(".input-cell.selected").each(function (index, data) {
-            let [rowId, colId] = findRowCOl(data);
-            cellData[selectedSheet][rowId - 1][colId - 1][property] = true;
-        });
+        // $(".input-cell.selected").each(function (index, data) {
+        //     let [rowId, colId] = findRowCOl(data);
+        //     cellData[selectedSheet][rowId - 1][colId - 1][property] = true;
+        // });
+        updateCellData(property,true);
     }
 }
+
+// function updateCellData(property,value) {
+//     if(value != defaultProperties[property]) {
+//         $(".input-cell.selected").each(function (index, data) {
+//             let [rowId, colId] = findRowCOl(data);
+//             if(cellData[selectedSheet][rowId - 1] == undefined) {
+//                 cellData[selectedSheet][rowId - 1] = {};
+//                 cellData[selectedSheet][rowId-1][colId-1] = {...defaultProperties};
+//                 cellData[selectedSheet][rowId-1][colId-1][property] = value;
+//             } else {
+//                 if(cellData[selectedSheet][rowId - 1][colId - 1] == undefined) {
+//                     cellData[selectedSheet][rowId-1][colId-1] = {...defaultProperties};
+//                     cellData[selectedSheet][rowId-1][colId-1][property] = value;
+//                 } else {
+//                     cellData[selectedSheet][rowId-1][colId-1][property] = value;
+//                 }
+//             }
+//         });
+//     } else {
+//         $(".input-cell.selected").each(function (index, data) {
+//             let [rowId, colId] = findRowCOl(data);
+//             if(cellData[selectedSheet][rowId - 1] && cellData[selectedSheet][rowId - 1][colId - 1]) {
+//                 cellData[selectedSheet][rowId-1][colId-1][property] = value;
+//                 if(JSON.stringify(cellData[selectedSheet][rowId - 1][colId - 1]) == JSON.stringify(defaultProperties)) {
+//                     delete cellData[selectedSheet][rowId - 1][colId - 1];
+//                     if(Object.keys(cellData[selectedSheet][rowId - 1]).length == 0) {
+//                         delete cellData[selectedSheet][rowId - 1];
+//                     }
+//                 }
+//             }
+//         });
+//     }
+// }
 
 $(".color-pick").colorPick({
     'initialColor': '#TYPECOLOR',
@@ -314,17 +349,19 @@ $(".color-pick").colorPick({
             if (this.element.attr("id") == "fill-color") {
                 $("#fill-color-icon").css("border-bottom", `4px solid ${this.color}`);
                 $(".input-cell.selected").css("background-color", this.color);
-                $(".input-cell.selected").each((index, data) => {
-                    let [rowId, colId] = findRowCOl(data);
-                    cellData[selectedSheet][rowId - 1][colId - 1].bgcolor = this.color;
-                });
+                // $(".input-cell.selected").each((index, data) => {
+                //     let [rowId, colId] = findRowCOl(data);
+                //     cellData[selectedSheet][rowId - 1][colId - 1].bgcolor = this.color;
+                // });
+                updateCellData("bgcolor",this.color);
             } else {
                 $("#text-color-icon").css("border-bottom", `4px solid ${this.color}`);
                 $(".input-cell.selected").css("color", this.color);
-                $(".input-cell.selected").each((index, data) => {
-                    let [rowId, colId] = findRowCOl(data);
-                    cellData[selectedSheet][rowId - 1][colId - 1].color = this.color;
-                });
+                // $(".input-cell.selected").each((index, data) => {
+                //     let [rowId, colId] = findRowCOl(data);
+                //     cellData[selectedSheet][rowId - 1][colId - 1].color = this.color;
+                // });
+                updateCellData("color",this.color);
             }
         }
     }
@@ -502,6 +539,7 @@ function addSheetTabEventListeners() {
 function renameSheet() {
     let newSheetName = $(".sheet-modal-input").val();
     if (newSheetName && !Object.keys(cellData).includes(newSheetName)) {
+        //need to change
         cellData[newSheetName] = cellData[selectedSheet];
         delete cellData[selectedSheet];
         selectedSheet = newSheetName;
