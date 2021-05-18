@@ -449,7 +449,7 @@ body {
     top: 0;
     left:0;
     height: 100vh;
-    width: 100vw;
+    width: 0vw;
     display: flex;
 }
 
