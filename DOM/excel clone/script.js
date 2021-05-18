@@ -506,7 +506,7 @@ function addSheetTabEventListeners() {
             let deleteModal = `<div class="sheet-modal-parent">
             <div class="sheet-delete-modal">
                 <div class="sheet-modal-title">
-                    <span>Sheet Name</span>
+                    <span>${$(".sheet-tab.selected").text()}</span>
                 </div>
                 <div class="sheet-modal-detail-container">
                     <span class="sheet-modal-detail-title">Are you sure?</span>
@@ -631,7 +631,7 @@ $("#menu-file").click(function (e) {
     fileModal.animate({
         "width": "100vw"
     },300);
-    $(".close,.file-transparent-modal,.new").click(function (e) {
+    $(".close,.file-transparent-modal,.new,.save").click(function (e) {
         fileModal.animate({
             "width": "0vw"
         },300);
@@ -643,8 +643,35 @@ $("#menu-file").click(function (e) {
         if(saved) {
             newFile();
         } else {
-            
+            $(".container").append(`<div class="sheet-modal-parent">
+                                        <div class="sheet-delete-modal">
+                                            <div class="sheet-modal-title">
+                                                <span>${$(".title-bar").text()}</span>
+                                            </div>
+                                            <div class="sheet-modal-detail-container">
+                                                <span class="sheet-modal-detail-title">Do you want to save changes?</span>
+                                            </div>
+                                            <div class="sheet-modal-confirmation">
+                                                <div class="button ok-button">
+                                                    Save
+                                                </div>
+                                                <div class="button cancel-button">Cancel</div>
+                                            </div>
+                                        </div>
+                                    </div>`);
+            $(".ok-button").click(function(e){
+                $(".sheet-modal-parent").remove();
+                saveFile(true);
+            });
+            $(".cancel-button").click(function(e){
+                $(".sheet-modal-parent").remove();
+                newFile();
+            })
         }
+    });
+
+    $(".save").click(function(e){
+        saveFile();
     })
 });
 
@@ -658,4 +685,45 @@ function newFile() {
     lastlyAddedSheetNumber = 1;
     addSheetTabEventListeners();
     $("#row-1-col-1").click();
+}
+
+function saveFile(createNewFile) {
+    if(!saved) {
+        $(".container").append(`<div class="sheet-modal-parent">
+                                <div class="sheet-rename-modal">
+                                    <div class="sheet-modal-title">
+                                        <span>Save File</span>
+                                    </div>
+                                    <div class="sheet-modal-input-container">
+                                        <span class="sheet-modal-input-title">File Name:</span>
+                                        <input class="sheet-modal-input" value='${$(".title-bar").text()}' type="text" />
+                                    </div>
+                                    <div class="sheet-modal-confirmation">
+                                        <div class="button ok-button">Save</div>
+                                        <div class="button cancel-button">Cancel</div>
+                                    </div>
+                                </div>
+                            </div>`);
+        $(".ok-button").click(function(e){
+            let fileName = $(".sheet-modal-input").val();
+            if(fileName) {
+                let href = `data:application/json,${encodeURIComponent(JSON.stringify(cellData))}`;
+                let a = $(`<a href=${href} download="${fileName}.json"></a>`);
+                $(".container").append(a);
+                a[0].click();
+                a.remove();
+                $(".sheet-modal-parent").remove();
+                saved = true;
+                if(createNewFile) {
+                    newFile();
+                }
+            }
+        });
+        $(".cancel-button").click(function(e){
+            $(".sheet-modal-parent").remove();
+            if(createNewFile) {
+                newFile();
+            }
+        });
+    }
 }
