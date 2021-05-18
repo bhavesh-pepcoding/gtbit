@@ -760,3 +760,43 @@ function openFile() {
         }
     })
 }
+
+let clipBoard = {startCell: [], cellData:{}};
+
+$("#cut,#copy").click(function(e){
+    clipBoard.startCell = findRowCOl($(".input-cell.selected")[0]);
+    $(".input-cell.selected").each((index,data) => {
+        let [rowId,colId] = findRowCOl(data);
+        if(cellData[selectedSheet][rowId-1] && cellData[selectedSheet][rowId-1][colId-1]) {
+            if(!clipBoard.cellData[rowId]) {
+                clipBoard.cellData[rowId] = {};
+            }
+            clipBoard.cellData[rowId][colId] = {...cellData[selectedSheet][rowId-1][colId-1]};
+            if($(this).text() == "content_cut") {
+                delete cellData[selectedSheet][rowId - 1][colId - 1];
+                if (Object.keys(cellData[selectedSheet][rowId - 1]).length == 0) {
+                    delete cellData[selectedSheet][rowId - 1];
+                }
+            }
+        }
+    });
+    console.log(cellData);
+    console.log(clipBoard);
+});
+
+$("#paste").click(function(e) {
+    let startCell = findRowCOl($(".input-cell.selected")[0]);
+    let rows = Object.keys(clipBoard.cellData);
+    for(let i of rows) {
+        let cols = Object.keys(clipBoard.cellData[i]);
+        for(let j of cols) {
+            let rowDistance = parseInt(i) - parseInt(clipBoard.startCell[0]);
+            let colDistance = parseInt(j) - parseInt(clipBoard.startCell[1]);
+            if(!cellData[selectedSheet][startCell[0] + rowDistance - 1]) {
+                cellData[selectedSheet][startCell[0] + rowDistance - 1] = {};
+            }
+            cellData[selectedSheet][startCell[0] + rowDistance - 1][startCell[1] + colDistance - 1] = {...clipBoard.cellData[i][j]};
+        }
+    }
+    loadSheet();
+})
