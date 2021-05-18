@@ -631,7 +631,7 @@ $("#menu-file").click(function (e) {
     fileModal.animate({
         "width": "100vw"
     },300);
-    $(".close,.file-transparent-modal,.new,.save").click(function (e) {
+    $(".close,.file-transparent-modal,.new,.save,.open").click(function (e) {
         fileModal.animate({
             "width": "0vw"
         },300);
@@ -668,10 +668,14 @@ $("#menu-file").click(function (e) {
                 newFile();
             })
         }
+        
     });
 
     $(".save").click(function(e){
         saveFile();
+    });
+    $(".open").click(function(e){
+        openFile();
     })
 });
 
@@ -726,4 +730,33 @@ function saveFile(createNewFile) {
             }
         });
     }
+}
+
+function openFile() {
+    let inputFile = $(`<input accept="application/json" type="file" />`);
+    $(".container").append(inputFile);
+    inputFile.click();
+    inputFile.change(function(e){
+        let file = e.target.files[0];
+        $(".title-bar").text(file.name.split(".json")[0]);
+        let reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function() {
+            emptySheet();
+            $(".sheet-tab").remove();
+            cellData = JSON.parse(reader.result);
+            let sheets = Object.keys(cellData);
+            for(let i of sheets) {
+                $(".sheet-tab-container").append(`<div class="sheet-tab selected">${i}</div>`)
+            }
+            addSheetTabEventListeners();
+            $(".sheet-tab").removeClass("selected");
+            $($(".sheet-tab")[0]).addClass("selected");
+            selectedSheet = sheets[0];
+            totalSheets = sheets.length;
+            lastlyAddedSheetNumber = totalSheets;
+            loadSheet();
+            inputFile.remove();
+        }
+    })
 }
