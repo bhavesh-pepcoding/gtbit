@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas POC 1</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            display: block;
+            /* height: 100vh;
+            width: 100vw; */
+        }
+    </style>
+</head>
+
+<body>
+    <canvas></canvas>
+    <script>
+        let canvas = document.querySelector("canvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let ctx = canvas.getContext("2d");
+
+        let img = document.createElement("img");
+        img.src = "https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80";
+        img.addEventListener("load", function(){
+            ctx.drawImage(img, 0, 0, 100, 100)
+        });
+    </script>
+</body>
+
+</html>

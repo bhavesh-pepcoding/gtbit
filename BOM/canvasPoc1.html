@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas POC 1</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            display: block;
+            /* height: 100vh;
+            width: 100vw; */
+        }
+    </style>
+</head>
+
+<body>
+    <canvas></canvas>
+    <script>
+        let canvas = document.querySelector("canvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let ctx = canvas.getContext("2d");
+
+        // let preX;
+        // let preY;
+        // let newX;
+        // let newY;
+        // let moveToNoted = false;
+        // canvas.addEventListener("mousemove", function (e) {
+        //     if (e.buttons == 1) {
+        //         if (!moveToNoted) {
+        //             ctx.beginPath();
+        //             ctx.moveTo(e.pageX, e.pageY);
+        //             ctx.strokeStyle = "blue";
+        //             ctx.lineWidth = 5;
+        //             moveToNoted = true;
+        //         } else {
+        //             ctx.lineTo(e.pageX, e.pageY);
+        //             ctx.stroke();
+        //         }
+        //     } else {
+        //         moveToNoted = false;
+        //     }
+        // });
+
+        let startPoint;
+        canvas.addEventListener("mousemove", function (e) {
+            if (e.buttons == 1) {
+                if (startPoint) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = "blue";
+                    ctx.lineWidth = 5;
+                    let width = e.pageX - startPoint[0];
+                    let height = e.pageY - startPoint[1];
+                    ctx.clearRect(startPoint[0]-1, startPoint[1] -1, width, height);
+                    ctx.strokeRect(startPoint[0],startPoint[1],width,height);  
+                } else {
+                    startPoint = [e.pageX, e.pageY];
+                }
+            } else {
+                startPoint = undefined;
+            }
+        });
+
+        // ctx.strokeRect(10,10,500,500);
+        // ctx.strokeRect(160,160,200,200);
+        // ctx.beginPath();
+        // ctx.moveTo(50,50);
+        // ctx.strokeStyle = "blue";
+        // ctx.lineWidth = 5;
+        // ctx.lineTo(150,50);
+        // ctx.stroke();
+
+        // ctx.beginPath();
+        // ctx.moveTo(50,100);
+        // ctx.strokeStyle="red";
+        // ctx.lineWidth = 8;
+        // ctx.lineTo(150,100);
+        // ctx.stroke();
+    </script>
+</body>
+
+</html>
