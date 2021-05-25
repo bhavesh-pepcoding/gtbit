@@ -33,13 +33,15 @@
         navigator.mediaDevices.getUserMedia({video: true}).then(function(mediaStream) {
             videoPlayer.srcObject = mediaStream;
             mediaRecorder = new MediaRecorder(mediaStream);
+            console.log(mediaRecorder);
             mediaRecorder.ondataavailable = function(e) {
                 chunks.push(e.data);
             }
 
             mediaRecorder.onstop = function() {
                 let blob  = new Blob(chunks, {type: "video/mp4"});
-                let blobUrl = URL.createObjectURL(blob);
+                chunks = [];
+                let blobUrl = URL.createObjectURL({"hello": "1"});
                 console.log(blobUrl);
                 let a = document.createElement("a");
                 a.href = blobUrl;
