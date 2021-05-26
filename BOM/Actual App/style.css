@@ -27,11 +27,6 @@ body {
     top: 50vh;
 }
 
-video {
-    height: 100%;
-    /* width: 100%; */
-}
-
 .filter-container {
     border: 1px solid white;
     position: fixed;
