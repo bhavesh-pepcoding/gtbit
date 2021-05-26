@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.video-container {
+    /* position: fixed; */
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+
+#record-video {
+    position: fixed;
+    right: 6rem;
+    top: 36vh;
+}
+
+#click-picture {
+    position: fixed;
+    right: 6rem;
+    top: 50vh;
+}
+
+video {
+    height: 100%;
+    /* width: 100%; */
+}
+
+.filter-container {
+    border: 1px solid white;
+    position: fixed;
+    top: 20vh;
+    left: 5vw;
+    height: 60vh;
+    width: 6vw;
+}
+
+.filter {
+    border: 1px solid white;
+    height: 20%;
+
+}
+
+.filter-screen-parent {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0
+}
