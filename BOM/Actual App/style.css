@@ -50,3 +50,9 @@ body {
     position: fixed;
     top: 0
 }
+
+.zoom {
+    position: absolute;
+    bottom: 30px;
+    left: 50vw;
+}

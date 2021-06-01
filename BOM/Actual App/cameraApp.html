@@ -9,7 +9,9 @@
 </head>
 <body>
         <div class="video-container">
-            <video autoplay></video>
+            <div class="frame" style="overflow: hidden; height: 100%;">
+                <video style="height: 100%;" autoplay></video>
+            </div>
         </div>
     <div class="filter-screen-parent">
         
@@ -23,6 +25,10 @@
         <div style="background-color: #ad5d6d7a;" class="filter"></div>
         <div style="background-color: #2195f323;" class="filter"></div>
         <div style="background-color: #4caf4f31;" class="filter"></div>
+    </div>
+    <div class="zoom">
+        <button class="zoom-in">zoom in</button>
+        <button class="zoom-out">zoom out</button>
     </div>
     
     <script src="script.js"></script>
