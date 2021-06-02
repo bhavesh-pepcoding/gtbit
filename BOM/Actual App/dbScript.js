@@ -68,7 +68,7 @@ function getData() {
             }
             cursor.continue();
         } else {
-            console.log("all data fetched")
+            console.log("all data fetched");
         }
 
     }
