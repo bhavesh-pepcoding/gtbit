@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,18 +8,19 @@
     <link href="style.css" rel="stylesheet" />
     <title>Camera</title>
 </head>
-<body>
-        <div class="video-container">
-            <div class="frame" style="overflow: hidden; height: 100%;">
-                <video style="height: 100%;" autoplay></video>
-            </div>
-        </div>
-    <div class="filter-screen-parent">
-        
-    </div> 
 
-    <button id = "record-video">Record</button>
-    <button id = "click-picture">Click</button>
+<body>
+    <div class="video-container">
+        <div class="frame" style="overflow: hidden; height: 100%;">
+            <video style="height: 100%;" autoplay></video>
+        </div>
+    </div>
+    <div class="filter-screen-parent">
+
+    </div>
+
+    <div id="record-video"><img src="https://img.icons8.com/flat-round/60/000000/record.png"/></div>
+    <div id="click-picture"><img src="https://img.icons8.com/ultraviolet/60/000000/camera.png"/></div>
     <div class="filter-container">
         <div style="background-color: #f4a2613d;" class="filter"></div>
         <div style="background-color: #e85d0440;" class="filter"></div>
@@ -30,7 +32,19 @@
         <button class="zoom-in">zoom in</button>
         <button class="zoom-out">zoom out</button>
     </div>
+    <div class="show-gallery"></div>
+    <!-- <div class="modal">
+        <div class="title">
+            <span style="margin-top: 10px; display: inline-block;">Gallery</span>
+            <span style="float: right; margin-top: 10px; margin-right: 20px; cursor: pointer;">X</span>
+        </div>
+        <div class="gallery"></div>
+    </div> -->
+    <div class="timer">
+        <span class="minute">00</span>:<span class="second">00</span>
+    </div>
     <script src="dbScript.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

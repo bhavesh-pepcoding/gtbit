@@ -34,15 +34,42 @@ captureBtn.addEventListener("click", function () {
     capture();
 })
 
+let timerInterval;
+let second = 0;
+let minute = 0;
 vidRecordBtn.addEventListener("click", function () {
     if (!recordState) {
         mediaRecorder.start();
         recordState = true;
-        vidRecordBtn.innerText = "Recording...";
+        timerInterval = setInterval(() => {
+            second++;
+            if (second == 60) {
+                minute++;
+                second = 0;
+            }
+            if(minute < 10) {
+                document.querySelector(".minute").innerText = "0" + minute;
+            } else {
+                document.querySelector(".minute").innerText = minute;
+            }
+
+            if(second < 10) {
+                document.querySelector(".second").innerText = "0" + second;
+            } else {
+                document.querySelector(".second").innerText = second;
+            }
+            
+        }, 1000);
+        vidRecordBtn.innerHTML = `<img src="https://img.icons8.com/flat-round/60/000000/stop.png"/>`;
     } else {
         mediaRecorder.stop();
         recordState = false;
-        vidRecordBtn.innerText = "Record";
+        clearInterval(timerInterval);
+        second = 0;
+        minute = 0;
+        document.querySelector(".minute").innerText = "00";
+        document.querySelector(".second").innerText = "00";
+        vidRecordBtn.innerHTML = `<img src="https://img.icons8.com/flat-round/60/000000/record.png"/>`;
     }
 });
 
@@ -59,10 +86,11 @@ navigator.mediaDevices.getUserMedia(constraints).then(function (mediaStream) {
         let blob = new Blob(chunks, { type: "video/mp4" });
         chunks = [];
         let blobUrl = URL.createObjectURL(blob);
-        let a = document.createElement("a");
-        a.href = blobUrl;
-        a.download = "temp.mp4";
-        a.click();
+        addData("video", blobUrl);
+        // let a = document.createElement("a");
+        // a.href = blobUrl;
+        // a.download = "temp.mp4";
+        // a.click();
     }
 })
 
@@ -71,19 +99,20 @@ function capture() {
     canvas.width = videoPlayer.videoWidth;
     canvas.height = videoPlayer.videoHeight;
     let ctx = canvas.getContext("2d");
-    ctx.translate(canvas.width/2, canvas.height/2);
-    ctx.scale(zoom,zoom);
-    ctx.translate(-(canvas.width/2),-(canvas.height/2));
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.scale(zoom, zoom);
+    ctx.translate(-(canvas.width / 2), -(canvas.height / 2));
     ctx.drawImage(videoPlayer, 0, 0);
     if (filter != "") {
         ctx.fillStyle = filter;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
-    let link = document.createElement("a");
-    link.download = "imgi.png";
-    link.href = canvas.toDataURL();
-    console.log(canvas.toDataURL());
-    link.click();
+    addData("image", canvas.toDataURL());
+    // let link = document.createElement("a");
+    // link.download = "imgi.png";
+    // link.href = canvas.toDataURL();
+    // console.log(canvas.toDataURL());
+    // link.click();
 }
 
 let filter = "";
