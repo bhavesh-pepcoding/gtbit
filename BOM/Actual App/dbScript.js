@@ -26,19 +26,36 @@ function getData() {
     let req = store.openCursor();
     let gallery = document.querySelector(".gallery");
     req.onsuccess = function (e) {
-        let cursor = req.result;     
+        let cursor = req.result;
         if (cursor) {
-            if(cursor.value.type == "image") {
+            if (cursor.value.type == "image") {
                 let image = document.createElement("div");
                 image.classList.add("image");
-                image.innerHTML = `<img src='${cursor.value.data}'></img>`;
+                image.innerHTML = `<img src='${cursor.value.data}'></img>
+                <div class="buttons">
+                    <button class="delete">Delete</button>
+                    <button class='download${cursor.value.nId}'>Download</button>
+                </div>`;
                 gallery.append(image);
+                let url = cursor.value.data;
+                let fileName = cursor.value.nId + ".png";
+                document.querySelector(`.download${cursor.value.nId}`).addEventListener("click", function(){
+                    download(url,fileName);
+                })
             } else {
                 let videoUrl = URL.createObjectURL(cursor.value.data);
                 let video = document.createElement("div");
                 video.classList.add("video");
-                video.innerHTML = `<video autoplay src='${videoUrl}' loop></video>`;
+                video.innerHTML = `<video autoplay src='${videoUrl}' loop></video>
+                <div class="buttons">
+                    <button class="delete">Delete</button>
+                    <button class="download${cursor.value.nId}">Download</button>
+                </div>`;
                 gallery.append(video);
+                let fileName = cursor.value.nId + ".mp4";
+                document.querySelector(`.download${cursor.value.nId}`).addEventListener("click", function(){
+                    download(videoUrl,fileName);
+                })
             }
             cursor.continue();
         } else {
@@ -46,4 +63,11 @@ function getData() {
         }
 
     }
+}
+
+function download(url,name) {
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = name;
+    a.click();
 }
