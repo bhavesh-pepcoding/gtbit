@@ -78,6 +78,7 @@ body {
     bottom: 10vh;
     right: 6vw;
     background-color: white;
+    cursor: pointer;
 }
 
 .timer {
@@ -86,4 +87,23 @@ body {
     color: red;
     left: 49vw;
     font-size: 20px;
+}
+
+.gallery {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: calc(100vh - 50px);
+}
+
+.image img, .video video {
+    height: 31vh;
+    width: 21vw;
+    margin-top: 10px;
+    border: 2px solid black;
+}
+
+.title {
+    margin-bottom: 10px;
 }
