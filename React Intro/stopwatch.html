@@ -24,6 +24,7 @@
                 };
                 this.interval = undefined;
             }
+
             start = () => {
                 this.interval = setInterval(() => {
                     this.setState({
@@ -44,6 +45,13 @@
                 })
             }
 
+            reset = () => {
+                this.stop();
+                this.setState({
+                    count: 0
+                })
+            }
+
             render() {
                 const a = "hello";
                 return (
@@ -51,6 +59,7 @@
                         <p>{this.state.count}</p>
                         <button onClick={this.start} disabled={this.state.startDisabled}>Start</button>
                         <button onClick={this.stop} disabled={this.state.stopDisabled}>Stop</button>
+                        <button onClick={this.reset}>Reset</button>
                     </div>
                 );
             }
