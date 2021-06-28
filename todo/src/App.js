@@ -1,9 +1,9 @@
 import './App.css';
-import InputText from './components/inputText/inputText';
+import Todo from './containers/todo/todo';
 
 function App() {
   return (
-    <InputText />
+    <Todo />
   );
 }
 

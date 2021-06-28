@@ -4,6 +4,7 @@ import "./inputText.css";
 class InputText extends React.Component {
     constructor(props) {
         super(props);
+        console.log(this.props)
         this.state = {
             value: ""
         };
@@ -15,9 +16,18 @@ class InputText extends React.Component {
         })
     }
 
+    submitList = (e) => {
+        if(e.key === "Enter") {
+            this.props.addList(this.state.value);
+            this.setState({
+                value: ""
+            })
+        }
+    }
+
     render() {
         return(
-            <input value={this.state.value} type="text" placeholder="Type what you want to do?" onKeyPress={() => {this.props.addList(this.state.value)}} onChange={this.updateVal} />
+            <input value={this.state.value} type="text" placeholder="Type what you want to do?" onKeyPress={this.submitList} onChange={this.updateVal} />
         );
     }
 }
