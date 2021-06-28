@@ -12,8 +12,16 @@ class Todo extends React.Component {
 
     addList = (value) => {
         this.setState({
-            lists: [...this.state.lists].concat([<List text={value} />])
+            lists: [...this.state.lists].concat([<List text={value} removeList={this.removeList} />])
         });
+    }
+
+    removeList = (e) => {
+        this.setState({
+            lists: this.state.lists.filter((data) => {
+                return JSON.stringify(data) !== JSON.stringify(<List text={e.target.innerText} removeList={this.removeList} />);
+            })
+        })
     }
 
     render () {
