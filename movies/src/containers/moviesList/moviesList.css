@@ -1,0 +1,12 @@
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.movie-table-container {
+    width: calc(100vw - 200px);
+    height: calc(100vh -50px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

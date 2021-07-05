@@ -1,12 +1,12 @@
 import './App.css';
 import React from 'react';
-import SideBar from './components/sideBar/sideBar';
+import MoviesList from './containers/moviesList/moviesList';
 
 class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <SideBar />
+        <MoviesList />
       </div>
     );
   }

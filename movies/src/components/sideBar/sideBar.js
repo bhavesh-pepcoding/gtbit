@@ -11,8 +11,8 @@ class SideBar extends React.Component {
     render() {
         return (
             <div className="sidebar">
-                <SideBarButtons text={"All Genre"} />
-                <SideBarButtons text={"Action"} />
+                <SideBarButtons text="All Genre" />
+                <SideBarButtons text="Action" />
             </div>
         )
     }
