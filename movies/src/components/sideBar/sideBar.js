@@ -1,4 +1,5 @@
 import React from 'react';
+import SideBarButtons from '../sideBarButtons/sideBarButtons';
 import "./sideBar.css";
 
 class SideBar extends React.Component {
@@ -10,7 +11,8 @@ class SideBar extends React.Component {
     render() {
         return (
             <div className="sidebar">
-
+                <SideBarButtons text={"All Genre"} />
+                <SideBarButtons text={"Action"} />
             </div>
         )
     }
