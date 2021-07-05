@@ -11,6 +11,7 @@ class Todo extends React.Component {
     }
 
     addList = (value) => {
+        console.log(value);
         this.setState({
             lists: [...this.state.lists].concat([<List text={value} removeList={this.removeList} />])
         });
@@ -30,7 +31,7 @@ class Todo extends React.Component {
                 <InputText addList={this.addList} />
                 {this.state.lists}
             </div>
-        )
+        );
     }
 }
 

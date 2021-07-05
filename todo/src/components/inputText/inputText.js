@@ -13,7 +13,7 @@ class InputText extends React.Component {
     updateVal = (e) => {
         this.setState({
             value: e.target.value
-        })
+        });
     }
 
     submitList = (e) => {
@@ -26,6 +26,7 @@ class InputText extends React.Component {
     }
 
     render() {
+        //variables
         return(
             <input value={this.state.value} type="text" placeholder="Type what you want to do?" onKeyPress={this.submitList} onChange={this.updateVal} />
         );
