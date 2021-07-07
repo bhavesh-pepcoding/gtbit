@@ -1,5 +1,10 @@
 .navbar {
     height: 50px;
-    border: 1px solid red;
     width: 100vw;
+    display: flex;
+}
+
+.logo {
+    height: 50px;
+    padding-right: 10px ;
 }

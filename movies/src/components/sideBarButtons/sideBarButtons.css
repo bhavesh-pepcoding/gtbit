@@ -3,5 +3,9 @@
     align-items: center;
     justify-content: center;
     height: 40px;
-    background-color: lightgray;
+}
+
+.sidebar-button:hover {
+    background-color: rgb(240, 240, 240);
+    cursor: pointer;
 }

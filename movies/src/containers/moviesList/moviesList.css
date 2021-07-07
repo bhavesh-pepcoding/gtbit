@@ -5,8 +5,19 @@
 
 .movie-table-container {
     width: calc(100vw - 200px);
-    height: calc(100vh -50px);
+    height: calc(100vh - 50px);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+
+.movie-search {
+    height: 30px;
+    width: calc(100vw - 400px);
+    margin-bottom: 40px;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    padding-left: 10px;
+    font-size: 20px;
 }

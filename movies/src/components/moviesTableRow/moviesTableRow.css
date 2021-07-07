@@ -1,7 +1,7 @@
 .movies-table-row {
     display: flex;
-    height: 40px;
-    border: 1px solid gray;
+    height: 16.66%;
+    border-bottom: 1px solid lightgray;
 }
 
 .column {
@@ -9,4 +9,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-right: 1px solid lightgray;
 }

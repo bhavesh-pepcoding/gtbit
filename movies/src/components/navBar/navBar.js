@@ -11,9 +11,10 @@ class NavBar extends React.Component {
     render() {
         return (
             <div className="navbar">
+                <img className="logo" src="https://i.pinimg.com/736x/54/51/75/54517514b7e9c8c21cb1526176c30732.jpg" alt="logo" />
                 <NavBarButtons text="Home" />
-                <NavBarButtons text="About" />
-                <NavBarButtons text="Placement Program" />
+                <NavBarButtons text="Movies" />
+                <NavBarButtons text="About Us" />
             </div>
         )
     }

@@ -8,9 +8,9 @@ class MoviesTableRow extends React.Component {
     }
 
     render() {
-        let {sno, name, genre, rating} = this.props.data;
+        let { sno, name, genre, rating } = this.props.data;
         return (
-            <div className="movies-table-row">
+            <div className="movies-table-row" style={this.props.header ? { fontWeight: "bold" } : {}}>
                 <div className="column serial-number">{sno + "."}</div>
                 <div className="column movie-name">{name}</div>
                 <div className="column genre">{genre}</div>

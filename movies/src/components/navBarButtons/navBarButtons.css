@@ -1,8 +1,12 @@
 .navbar-button {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
     display: inline-flex;
     align-items: center;
-    background-color: lightgray;
     height: 100%;
+}
+
+.navbar-button:hover {
+    background-color: rgb(240, 240, 240);
+    cursor: pointer;
 }
