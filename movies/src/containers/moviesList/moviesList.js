@@ -4,6 +4,7 @@ import NavBar from '../../components/navBar/navBar';
 import Pagination from '../../components/pagination/pagination';
 import SideBar from '../../components/sideBar/sideBar';
 import "./moviesList.css";
+import axios from 'axios';
 
 class MoviesList extends React.Component {
     constructor(props) {
@@ -13,6 +14,12 @@ class MoviesList extends React.Component {
             pageNumber: 1,
             rating: "all"
         };
+    }
+
+    componentDidMount() {
+        axios.get("https://react-backend101.herokuapp.com/movies").then((res) => {
+            console.log(res);
+        })
     }
 
     changeSearch = (e) => {
