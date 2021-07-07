@@ -10,7 +10,8 @@ class MoviesList extends React.Component {
         super(props);
         this.state = {
             search: "",
-            pageNumber: 1
+            pageNumber: 1,
+            rating: "all"
         };
     }
 
@@ -27,130 +28,144 @@ class MoviesList extends React.Component {
         });
     }
 
+    changeRating = (e) => {
+        this.setState({
+            pageNumber: 1,
+            rating: e.target.value === "all" ? "all" : parseInt(e.target.value)
+        })
+    }
+
     render() {
         let data = [{
             sno: 1,
             name: "P.K",
             genre: "Comedy",
-            rating: "Very good"
-        }, 
+            rating: 4
+        },
         {
             sno: 2,
             name: "Sholay",
             genre: "Drama",
-            rating: "Excellent"
+            rating: 5
         },
 
         {
             sno: 3,
             name: "Anand",
             genre: "Comedy",
-            rating: "Superb"
+            rating: 3
         },
         {
             sno: 4,
             name: "Harry potter",
             genre: "Fictional",
-            rating: "Awesome"
+            rating: 2
         },
         {
             sno: 5,
             name: "Hungama",
             genre: "Comedy",
-            rating: "Awesome"
+            rating: 4
         },
         {
             sno: 6,
             name: "Jokar",
             genre: "Emotional",
-            rating: "Awesome"
+            rating: 5
         },
         {
             sno: 7,
             name: "Tanhaji",
             genre: "Action",
-            rating: "Awesome"
+            rating: 3
         },
         {
             sno: 8,
             name: "Aaj kal",
             genre: "Romantic",
-            rating: "Awesome"
+            rating: 0
         },
         {
             sno: 9,
             name: "Golmaal",
             genre: "Comedy",
-            rating: "Awesome"
+            rating: 4
         },
         {
             sno: 10,
             name: "Angrezi medium",
             genre: "Comedy",
-            rating: "Awesome"
+            rating: 1
         },
         {
             sno: 11,
             name: "Race 3",
             genre: "Against Physics",
-            rating: "Awesome"
+            rating: 5
         },
         {
             sno: 12,
             name: "ABCD",
             genre: "Dance",
-            rating: "Awesome"
+            rating: 2
         },
         {
             sno: 13,
             name: "Happy new year",
             genre: "Dance",
-            rating: "Awesome"
+            rating: 3
         },
         {
             sno: 14,
             name: "Kaal",
             genre: "Fictional",
-            rating: "Awesome"
+            rating: 4
         },
         {
             sno: 15,
             name: "DDLJ",
             genre: "Romantic",
-            rating: "Awesome"
+            rating: 1
         },
         {
             sno: 16,
             name: "Article 15",
             genre: "Crime drama",
-            rating: "Awesome"
+            rating: 0
         },
         {
             sno: 17,
             name: "Special 26",
             genre: "Action",
-            rating: "Awesome"
+            rating: 2
         },
         {
             sno: 18,
             name: "Padman",
             genre: "Drama",
-            rating: "Awesome"
+            rating: 4
         },
         {
             sno: 19,
             name: "Baby",
             genre: "Funny",
-            rating: "Awesome"
+            rating: 3
         },
         {
             sno: 20,
             name: "Badla",
             genre: "Drama crime",
-            rating: "Awesome"
+            rating: 5
         }
         ];
+
         let filteredData = data.filter((movie) => {
+            if(this.state.rating !== "all") {
+                return movie.rating === this.state.rating;
+            }
+            return true;
+        })
+        filteredData = filteredData.filter((movie) => {
             let movieName = movie.name.toLowerCase();
             let search = this.state.search.toLowerCase();
             return movieName.includes(search);
@@ -158,7 +173,7 @@ class MoviesList extends React.Component {
 
         let finalData = [];
 
-        for(let i = (this.state.pageNumber - 1) * 5; i < (this.state.pageNumber * 5) && i < filteredData.length; i++) {
+        for (let i = (this.state.pageNumber - 1) * 5; i < (this.state.pageNumber * 5) && i < filteredData.length; i++) {
             finalData.push(filteredData[i]);
         }
 
@@ -167,7 +182,19 @@ class MoviesList extends React.Component {
                 <NavBar />
                 <SideBar />
                 <div className="movie-table-container">
-                    <input value={this.state.search} placeholder="Search for movies" className="movie-search" type="text" onChange={this.changeSearch} />
+                    <div className="filters">
+                        <input value={this.state.search} placeholder="Search for movies" className="movie-search" type="text" onChange={this.changeSearch} />
+                        <select className="rating-dropdown" name="rating" onChange={this.changeRating}>
+                            <option value={"all"} selected>All Rating</option>
+                            <option value={0}>0 Rating</option>
+                            <option value={1}>1 Rating</option>
+                            <option value={2}>2 Rating</option>
+                            <option value={3}>3 Rating</option>
+                            <option value={4}>4 Rating</option>
+                            <option value={5}>5 Rating</option>
+                        </select>
+                    </div>
+
                     <MoviesTable data={finalData} />
                     <Pagination totalMovies={filteredData.length} changePage={this.changePage} />
                 </div>
