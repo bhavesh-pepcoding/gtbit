@@ -9,11 +9,7 @@ class Navigator extends Component {
         return(
             <BrowserRouter>
             <Switch>
-                <Route path="/movies" component={SideBar}></Route>
-                <Route path="/movies/get" exact component={MoviesList}></Route>
-                
-                <Route path="/header" component={NavBar}></Route>
-                <Route path="/sidebar" component={SideBar}></Route>
+                <Route path="/" component={MoviesList}></Route>
             </Switch>
             </BrowserRouter>
         );

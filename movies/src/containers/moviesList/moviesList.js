@@ -5,8 +5,8 @@ import Pagination from '../../components/pagination/pagination';
 import SideBar from '../../components/sideBar/sideBar';
 import Loader from '../../components/loader/loader';
 import "./moviesList.css";
-import axios from 'axios';
 import { HandleGetMovies } from './dataManager';
+import { connect } from 'react-redux';
 
 class MoviesList extends React.Component {
     constructor(props) {
@@ -26,6 +26,9 @@ class MoviesList extends React.Component {
             data: data,
             loader: false
         });
+
+        // this.props.updateMovies(data);
+
     }
 
     changeSearch = (e) => {
@@ -96,4 +99,16 @@ class MoviesList extends React.Component {
     }
 }
 
-export default MoviesList;
+const mapStateToProps = state => {
+    return {
+        data: state.data
+    }
+}
+
+const mapActionToProps = dispatch => {
+    return {
+        updateMovies: (data) => dispatch({type: "updateMovies", data: data})
+    }
+}
+
+export default connect(mapStateToProps,mapActionToProps)(MoviesList);
