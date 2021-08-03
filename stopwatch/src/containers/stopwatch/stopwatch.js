@@ -1,55 +1,50 @@
-import React from 'react';
+import { useState } from 'react';
 import Button from '../../components/button/button';
 
-class StopWatch extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-        this.state = {
-            count: 0,
-            startDisabled: false,
-            stopDisabled: true,
-        };
-        this.interval = undefined;
-    }
+let interval = undefined;
 
-    start = () => {
-        this.interval = setInterval(() => {
-            this.setState({
-                count: this.state.count + 1
-            })
+function StopWatch() {
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {};
+    //     this.state = {
+    //         count: 0,
+    //         startDisabled: false,
+    //         stopDisabled: true,
+    //     };
+    //     this.interval = undefined;
+    // }
+    const [count, setCount] = useState(0);
+    const [startDisabled, setStartDisabled] = useState(false);
+    const [stopDisabled, setStopDisabled] = useState(true);
+    // const [inter, setInter] = useState(undefined);
+
+    const start = () => {
+        interval = setInterval(() => {
+            setCount((count) => count + 1); // due to callback we are getting updated value of count every time
         }, 1000);
-        this.setState({
-            startDisabled: true,
-            stopDisabled: false
-        })
+        setStartDisabled(true);
+        setStopDisabled(false);
     }
 
-    stop = () => {
-        clearInterval(this.interval);
-        this.setState({
-            startDisabled: false,
-            stopDisabled: true
-        })
+    const stop = () => {
+        clearInterval(interval);
+        setStartDisabled(false);
+        setStopDisabled(true);
     }
 
-    reset = () => {
-        this.stop();
-        this.setState({
-            count: 0
-        })
+    const reset = () => {
+        stop();
+        setCount(0);
     }
-
-    render() {
-        return (
-            <div>
-                <p>{this.state.count}</p>
-                <Button text="Start" disabled={this.state.startDisabled} clickHandler={this.start} />
-                <Button text="Stop" disabled={this.state.stopDisabled} clickHandler={this.stop}/>
-                <Button text="Reset" disabled={false} clickHandler={this.reset}/>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <p>{count}</p>
+            <button disabled={startDisabled} onClick={() => start(count)} >Start</button>
+            <button disabled={stopDisabled} onClick={stop} >Stop</button>
+            <button disabled={false} onClick={reset} >Reset</button>
+        </div>
+    )
 }
 
 export default StopWatch;
